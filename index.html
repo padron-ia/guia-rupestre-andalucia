@@ -631,6 +631,41 @@
     text-align: center;
   }
   .toast[data-on="1"] { opacity: 1; }
+  body[data-update="1"] .toast { bottom: 92px; }
+
+  .update {
+    position: fixed;
+    left: 50%;
+    bottom: 24px;
+    transform: translateX(-50%);
+    background: var(--rust);
+    color: #F8F6F2;
+    border-radius: 2px;
+    padding: 12px 14px 12px 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: 0 8px 30px -12px rgba(0, 0, 0, .6);
+    z-index: 11;
+    max-width: calc(100vw - 32px);
+    font-size: 14px;
+  }
+  .update[hidden] { display: none; }
+  .update button {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: .04em;
+    background: #F8F6F2;
+    color: var(--rust);
+    border: 0;
+    padding: 8px 13px;
+    border-radius: 2px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .update button:hover { background: #fff; }
+  .update button:focus-visible { outline: 2px solid #F8F6F2; outline-offset: 2px; }
+  .update .cerrar { background: transparent; color: #F8F6F2; padding: 8px 4px; font-size: 15px; }
 
   body[data-filter="pending"] tr[data-done="1"],
   body[data-filter="pending"] article.card[data-done="1"] { display: none; }
@@ -1618,6 +1653,9 @@
       confirmación</strong>.</p>
     <p>Lo que marquéis como visitado se guarda en este navegador. Para que lo tengáis los dos, usad
       «Compartir progreso»: copia un enlace que ya lleva dentro las que habéis hecho.</p>
+    <p>Versión de la guía: <strong>18 de agosto de 2026, 11:38</strong>. Cuando publique cambios, al abrirla
+      os avisa abajo con un botón para actualizar — la copia guardada en el móvil no se queda
+      atrás.</p>
     <p>Fuentes principales:
       <a href="https://cuevadelapileta.com/visita">Cueva de la Pileta</a> ·
       <a href="https://www.ardales.es/5518/cueva-prehistorica-de-ardales">Ayuntamiento de Ardales</a> ·
@@ -1636,6 +1674,12 @@
 </div>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<div class="update" id="version-nueva" role="status" aria-live="polite" hidden>
+  <span>Hay una versión nueva de la guía</span>
+  <button type="button" id="version-actualizar">Actualizar</button>
+  <button type="button" class="cerrar" id="version-cerrar" aria-label="Ahora no">✕</button>
+</div>
 
 <script>
 (function () {
@@ -2115,11 +2159,55 @@
   /* ---------- sin cobertura: guardar la guía en el móvil ---------- */
 
   var estadoOffline = document.getElementById('offline-estado');
+  var avisoVersion = document.getElementById('version-nueva');
+  var recargando = false;
+
+  function mostrarAvisoVersion() {
+    if (!avisoVersion.hidden) return;
+    avisoVersion.hidden = false;
+    document.body.setAttribute('data-update', '1');
+  }
+
+  document.getElementById('version-actualizar').addEventListener('click', function () {
+    recargando = true;
+    window.location.reload();
+  });
+  document.getElementById('version-cerrar').addEventListener('click', function () {
+    avisoVersion.hidden = true;
+    document.body.removeAttribute('data-update');
+  });
+
   if ('serviceWorker' in navigator && location.protocol === 'https:') {
-    navigator.serviceWorker.register('sw.js').then(function () {
+    navigator.serviceWorker.register('sw.js').then(function (registro) {
       estadoOffline.textContent = 'Guardada en el móvil: funciona sin datos en la sierra';
+
+      // Ya había una versión nueva esperando de una visita anterior.
+      if (registro.waiting && navigator.serviceWorker.controller) mostrarAvisoVersion();
+
+      registro.addEventListener('updatefound', function () {
+        var nuevo = registro.installing;
+        if (!nuevo) return;
+        nuevo.addEventListener('statechange', function () {
+          // Solo avisamos si ya había una copia antigua: en la primera
+          // visita no hay nada que actualizar.
+          if (nuevo.state === 'installed' && navigator.serviceWorker.controller) mostrarAvisoVersion();
+        });
+      });
+
+      // Miramos si hay cambios al abrir y cada vez que se vuelve a la pestaña.
+      registro.update().catch(function () {});
+      document.addEventListener('visibilitychange', function () {
+        if (!document.hidden) registro.update().catch(function () {});
+      });
     }).catch(function () {
       estadoOffline.textContent = 'No se pudo guardar para uso sin datos en este navegador';
+    });
+
+    // El service worker nuevo ha tomado el control: avisamos en vez de
+    // recargar a lo bruto, por si se está escribiendo una nota.
+    navigator.serviceWorker.addEventListener('controllerchange', function () {
+      if (recargando) return;
+      mostrarAvisoVersion();
     });
   } else {
     estadoOffline.textContent = 'Disponible sin datos solo en la versión publicada en la web';
