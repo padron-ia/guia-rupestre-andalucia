@@ -2003,11 +2003,15 @@
     bg.setAttribute('data-cal-google', id);
     bg.textContent = 'Google Calendar';
     plan.appendChild(bg);
-    var bi = document.createElement('button');
-    bi.className = 'btn'; bi.type = 'button';
-    bi.setAttribute('data-cal-ics', id);
-    bi.textContent = 'Descargar .ics';
-    plan.appendChild(bi);
+    // El visor de artefactos bloquea las descargas: allí solo ofrecemos Google Calendar.
+    var puedeDescargar = (function () { try { return window.self === window.top; } catch (e) { return false; } })();
+    if (puedeDescargar) {
+      var bi = document.createElement('button');
+      bi.className = 'btn'; bi.type = 'button';
+      bi.setAttribute('data-cal-ics', id);
+      bi.textContent = 'Descargar .ics';
+      plan.appendChild(bi);
+    }
     pie.appendChild(plan);
   });
 
