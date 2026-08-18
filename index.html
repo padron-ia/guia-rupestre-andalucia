@@ -855,16 +855,17 @@
     .plegable { order: 6; }
     .resumen { display: none; }
 
-    article.card .plegable {
-      overflow: hidden;
-      height: 0;
-      opacity: 0;
-      padding-top: 0;
-      padding-bottom: 0;
-      transition: height 280ms var(--ease-drawer), opacity 200ms var(--ease-out);
+    /* Abrir la ficha es ocasional: basta una entrada corta que evite el
+       salto seco. Sin depender de medir alturas, que es frágil. */
+    article.card .plegable { display: none; }
+    article.card[data-abierta="1"] .plegable {
+      display: block;
+      animation: desplegar 240ms var(--ease-out) both;
     }
-    article.card[data-abierta="1"] .plegable { opacity: 1; }
-    .plegable > .interior { padding-bottom: 22px; }
+    @keyframes desplegar {
+      from { opacity: 0; transform: translateY(-6px); }
+      to   { opacity: 1; transform: none; }
+    }
 
     /* plegada, la ficha enseña solo lo que se usa de pie:
        ver más, ruta, guardar y marcar. Lo demás, al abrirla. */
@@ -1879,7 +1880,7 @@
       confirmación</strong>.</p>
     <p>Lo que marquéis como visitado se guarda en este navegador. Para que lo tengáis los dos, usad
       «Compartir progreso»: copia un enlace que ya lleva dentro las que habéis hecho.</p>
-    <p>Versión de la guía: <strong id="sello-version">18 de agosto de 2026, 12:00</strong>. En la web
+    <p>Versión de la guía: <strong id="sello-version">18 de agosto de 2026, 12:04</strong>. En la web
       publicada, cuando suba cambios os avisa abajo con un botón para actualizar — así la copia
       guardada en el móvil no se queda atrás.</p>
     <p>Fuentes principales:
@@ -2233,30 +2234,8 @@
     });
   })();
 
-  // Desplegar midiendo la altura real: exacto y, al ser una transición CSS,
-  // se puede interrumpir a mitad sin saltos.
-  function abrirFicha(ficha) {
-    ficha.setAttribute('data-abierta', '1');
-    var pl = ficha.querySelector('.plegable');
-    if (!pl || !esMovil.matches) return;
-    pl.style.height = pl.scrollHeight + 'px';
-    var alTerminar = function (ev) {
-      if (ev.propertyName !== 'height') return;
-      pl.style.height = 'auto';
-      pl.removeEventListener('transitionend', alTerminar);
-    };
-    pl.addEventListener('transitionend', alTerminar);
-  }
-
-  function cerrarFicha(ficha) {
-    var pl = ficha.querySelector('.plegable');
-    if (pl && esMovil.matches) {
-      pl.style.height = pl.scrollHeight + 'px';
-      void pl.offsetHeight;
-      pl.style.height = '0px';
-    }
-    ficha.removeAttribute('data-abierta');
-  }
+  function abrirFicha(ficha) { ficha.setAttribute('data-abierta', '1'); }
+  function cerrarFicha(ficha) { ficha.removeAttribute('data-abierta'); }
 
   function pintarPlegado() {
     var movil = esMovil.matches;
@@ -2265,11 +2244,7 @@
       var boton = document.querySelector('[data-abrir="' + id + '"]');
       if (!ficha || !boton) return;
       boton.hidden = !movil;
-      var pl = ficha.querySelector('.plegable');
-      if (!movil) {
-        ficha.removeAttribute('data-abierta');
-        if (pl) pl.style.height = '';
-      }
+      if (!movil) ficha.removeAttribute('data-abierta');
     });
   }
   esMovil.addEventListener ? esMovil.addEventListener('change', pintarPlegado) : esMovil.addListener(pintarPlegado);
