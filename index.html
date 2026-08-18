@@ -856,16 +856,15 @@
     .resumen { display: none; }
 
     article.card .plegable {
-      display: grid;
-      grid-template-rows: 0fr;
+      overflow: hidden;
+      height: 0;
+      opacity: 0;
       padding-top: 0;
       padding-bottom: 0;
-      transition: grid-template-rows 280ms var(--ease-drawer), opacity 200ms var(--ease-out);
-      opacity: 0;
+      transition: height 280ms var(--ease-drawer), opacity 200ms var(--ease-out);
     }
-    article.card[data-abierta="1"] .plegable { grid-template-rows: 1fr; opacity: 1; }
-    .plegable > .interior { overflow: hidden; min-height: 0; }
-    article.card[data-abierta="1"] .plegable > .interior { padding-bottom: 22px; }
+    article.card[data-abierta="1"] .plegable { opacity: 1; }
+    .plegable > .interior { padding-bottom: 22px; }
 
     /* plegada, la ficha enseña solo lo que se usa de pie:
        ver más, ruta, guardar y marcar. Lo demás, al abrirla. */
@@ -1880,7 +1879,7 @@
       confirmación</strong>.</p>
     <p>Lo que marquéis como visitado se guarda en este navegador. Para que lo tengáis los dos, usad
       «Compartir progreso»: copia un enlace que ya lleva dentro las que habéis hecho.</p>
-    <p>Versión de la guía: <strong id="sello-version">18 de agosto de 2026, 11:58</strong>. En la web
+    <p>Versión de la guía: <strong id="sello-version">18 de agosto de 2026, 12:00</strong>. En la web
       publicada, cuando suba cambios os avisa abajo con un botón para actualizar — así la copia
       guardada en el móvil no se queda atrás.</p>
     <p>Fuentes principales:
@@ -2234,6 +2233,31 @@
     });
   })();
 
+  // Desplegar midiendo la altura real: exacto y, al ser una transición CSS,
+  // se puede interrumpir a mitad sin saltos.
+  function abrirFicha(ficha) {
+    ficha.setAttribute('data-abierta', '1');
+    var pl = ficha.querySelector('.plegable');
+    if (!pl || !esMovil.matches) return;
+    pl.style.height = pl.scrollHeight + 'px';
+    var alTerminar = function (ev) {
+      if (ev.propertyName !== 'height') return;
+      pl.style.height = 'auto';
+      pl.removeEventListener('transitionend', alTerminar);
+    };
+    pl.addEventListener('transitionend', alTerminar);
+  }
+
+  function cerrarFicha(ficha) {
+    var pl = ficha.querySelector('.plegable');
+    if (pl && esMovil.matches) {
+      pl.style.height = pl.scrollHeight + 'px';
+      void pl.offsetHeight;
+      pl.style.height = '0px';
+    }
+    ficha.removeAttribute('data-abierta');
+  }
+
   function pintarPlegado() {
     var movil = esMovil.matches;
     ORDEN.forEach(function (id) {
@@ -2241,7 +2265,11 @@
       var boton = document.querySelector('[data-abrir="' + id + '"]');
       if (!ficha || !boton) return;
       boton.hidden = !movil;
-      if (!movil) ficha.removeAttribute('data-abierta');
+      var pl = ficha.querySelector('.plegable');
+      if (!movil) {
+        ficha.removeAttribute('data-abierta');
+        if (pl) pl.style.height = '';
+      }
     });
   }
   esMovil.addEventListener ? esMovil.addEventListener('change', pintarPlegado) : esMovil.addListener(pintarPlegado);
@@ -2430,12 +2458,12 @@
       var fa = document.querySelector('article.card[data-id="' + aid + '"]');
       var abierta = fa.getAttribute('data-abierta') === '1';
       if (abierta) {
-        fa.removeAttribute('data-abierta');
+        cerrarFicha(fa);
         abrir.textContent = 'Ver la ficha completa';
         abrir.setAttribute('aria-expanded', 'false');
         fa.scrollIntoView({ block: 'nearest' });
       } else {
-        fa.setAttribute('data-abierta', '1');
+        abrirFicha(fa);
         abrir.textContent = 'Ocultar la ficha';
         abrir.setAttribute('aria-expanded', 'true');
       }
@@ -2447,8 +2475,8 @@
       var destino = document.getElementById('c-' + pin.getAttribute('data-id'));
       if (destino) {
         destino.hidden = false;
-        if (esMovil.matches) {
-          destino.setAttribute('data-abierta', '1');
+        if (esMovil.matches && destino.getAttribute('data-abierta') !== '1') {
+          abrirFicha(destino);
           var ba = destino.querySelector('[data-abrir]');
           if (ba) { ba.textContent = 'Ocultar la ficha'; ba.setAttribute('aria-expanded', 'true'); }
         }
