@@ -30,6 +30,9 @@
     --sea: #DCE3DE;
     --land: #EFF2EC;
     --shadow: 0 1px 2px rgba(21, 25, 20, .06), 0 8px 24px -16px rgba(21, 25, 20, .3);
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+    --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
     --display: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
     --body: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
@@ -74,6 +77,8 @@
 
   body {
     margin: 0;
+    font-optical-sizing: auto;
+    text-rendering: optimizeLegibility;
     background: var(--bg);
     color: var(--ink);
     font-family: var(--body);
@@ -144,8 +149,15 @@
     margin-top: 6px;
   }
   .bar { flex: 1 1 200px; height: 6px; background: var(--surface-2); border: 1px solid var(--line); position: relative; }
-  .bar i { display: block; height: 100%; background: var(--open); width: 0; transition: width .35s ease; }
-  @media (prefers-reduced-motion: reduce) { .bar i { transition: none; } }
+  .bar i {
+    display: block;
+    height: 100%;
+    width: 100%;
+    background: var(--open);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 260ms var(--ease-out);
+  }
   .progress .tools { display: flex; flex-wrap: wrap; gap: 8px; }
 
   /* ---------- aviso destacado ---------- */
@@ -202,7 +214,7 @@
   .capital text { fill: var(--faint); font-size: 8.5px; font-family: var(--mono); letter-spacing: .04em; }
 
   .pin { cursor: pointer; }
-  .pin .halo { fill: var(--rust); opacity: 0; transition: opacity .2s ease; }
+  .pin .halo { fill: var(--rust); opacity: 0; transition: opacity 160ms var(--ease-out); }
   .pin .dot { fill: var(--surface); stroke: var(--rust); stroke-width: 2.4; }
   .pin .lbl { fill: var(--ink); font-size: 10px; font-family: var(--body); font-weight: 600; }
   .pin:hover .halo, .pin:focus-visible .halo { opacity: .18; }
@@ -250,7 +262,7 @@
   }
   .sec-note { color: var(--muted); max-width: 66ch; margin: 0 0 32px; }
   .rule { height: 1px; background: var(--line); border: 0; margin: 0 0 28px; }
-  p { max-width: 66ch; }
+  p { max-width: 66ch; text-wrap: pretty; }
 
   /* ---------- tabla ---------- */
 
@@ -342,9 +354,8 @@
 
   article.card { background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow); scroll-margin-top: 20px; }
   article.card[data-done="1"] { border-color: var(--open); }
-  article.card.flash { animation: flash 1.2s ease; }
-  @keyframes flash { from { box-shadow: 0 0 0 3px var(--rust); } to { box-shadow: var(--shadow); } }
-  @media (prefers-reduced-motion: reduce) { article.card.flash { animation: none; } }
+  article.card { transition: box-shadow 240ms var(--ease-out), border-color 240ms var(--ease-out); }
+  article.card.flash { box-shadow: 0 0 0 2px var(--rust); }
 
   .card-head {
     display: flex;
@@ -608,6 +619,41 @@
 
   .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
+
+  /* ---------- respuesta al tacto ---------- */
+  /* Nada pulsable sin respuesta: el botón se hunde en el momento de
+     apretarlo, no al soltarlo. */
+
+  .btn, .chipf, .tick, .star, .saltos a, .update button, .arriba {
+    transition: transform 160ms var(--ease-out), border-color 160ms var(--ease-out),
+                background-color 160ms var(--ease-out), color 160ms var(--ease-out);
+  }
+  .btn:active, .chipf:active, .tick:active, .star:active,
+  .saltos a:active, .update button:active, .arriba:active {
+    transform: scale(0.97);
+  }
+  .pin { transition: opacity 160ms var(--ease-out); }
+  .pin:active .dot { transform-box: fill-box; transform-origin: center; transform: scale(0.9); }
+  .pin .dot { transition: transform 160ms var(--ease-out), fill 200ms var(--ease-out), stroke 200ms var(--ease-out); }
+
+  /* El aviso de versión entra desde abajo, nunca desde la nada. */
+  .update {
+    transform: translate(-50%, 10px) scale(.98);
+    opacity: 0;
+    transition: opacity 220ms var(--ease-out), transform 220ms var(--ease-out);
+  }
+  .update:not([hidden]) { transform: translate(-50%, 0) scale(1); opacity: 1; }
+
+  /* Un solo interruptor para quien pide menos movimiento. */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: .01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: .01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
   /* ---------- varios ---------- */
 
   a { color: var(--rust); text-decoration-thickness: 1px; text-underline-offset: 2px; }
@@ -618,7 +664,6 @@
     position: fixed;
     left: 50%;
     bottom: 24px;
-    transform: translateX(-50%);
     background: var(--ink);
     color: var(--bg);
     font-family: var(--mono);
@@ -627,12 +672,13 @@
     border-radius: 2px;
     opacity: 0;
     pointer-events: none;
-    transition: opacity .25s ease;
+    transform: translate(-50%, 8px) scale(.98);
+    transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out);
     z-index: 10;
     max-width: 90vw;
     text-align: center;
   }
-  .toast[data-on="1"] { opacity: 1; }
+  .toast[data-on="1"] { opacity: 1; transform: translate(-50%, 0) scale(1); }
   body[data-update="1"] .toast { bottom: 92px; }
 
   .update {
@@ -653,6 +699,7 @@
     font-size: 14px;
   }
   .update[hidden] { display: none; }
+  .update { will-change: transform, opacity; }
   .update button {
     font-family: var(--mono);
     font-size: 11.5px;
@@ -685,7 +732,9 @@
     position: sticky;
     top: 0;
     z-index: 8;
-    background: var(--bg);
+    background: color-mix(in srgb, var(--bg) 82%, transparent);
+    backdrop-filter: saturate(180%) blur(14px);
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
     border-bottom: 1px solid var(--line);
     margin: 0 -16px 24px;
     padding: 8px 16px;
@@ -806,8 +855,17 @@
     .plegable { order: 6; }
     .resumen { display: none; }
 
-    article.card .plegable { display: none; }
-    article.card[data-abierta="1"] .plegable { display: block; }
+    article.card .plegable {
+      display: grid;
+      grid-template-rows: 0fr;
+      padding-top: 0;
+      padding-bottom: 0;
+      transition: grid-template-rows 280ms var(--ease-drawer), opacity 200ms var(--ease-out);
+      opacity: 0;
+    }
+    article.card[data-abierta="1"] .plegable { grid-template-rows: 1fr; opacity: 1; }
+    .plegable > .interior { overflow: hidden; min-height: 0; }
+    article.card[data-abierta="1"] .plegable > .interior { padding-bottom: 22px; }
 
     /* plegada, la ficha enseña solo lo que se usa de pie:
        ver más, ruta, guardar y marcar. Lo demás, al abrirla. */
@@ -1822,7 +1880,7 @@
       confirmación</strong>.</p>
     <p>Lo que marquéis como visitado se guarda en este navegador. Para que lo tengáis los dos, usad
       «Compartir progreso»: copia un enlace que ya lleva dentro las que habéis hecho.</p>
-    <p>Versión de la guía: <strong id="sello-version">18 de agosto de 2026, 11:54</strong>. En la web
+    <p>Versión de la guía: <strong id="sello-version">18 de agosto de 2026, 11:58</strong>. En la web
       publicada, cuando suba cambios os avisa abajo con un botón para actualizar — así la copia
       guardada en el móvil no se queda atrás.</p>
     <p>Fuentes principales:
@@ -1984,7 +2042,7 @@
     });
 
     document.getElementById('done-n').textContent = hechas;
-    document.getElementById('bar').style.width = (hechas / ORDEN.length * 100) + '%';
+    document.getElementById('bar').style.transform = 'scaleX(' + (hechas / ORDEN.length) + ')';
 
     var k = document.getElementById('done-k');
     var pend = siguientePendiente();
@@ -2159,6 +2217,10 @@
         cuerpo.parentNode.insertBefore(av, cuerpo);
       }
 
+      var interior = document.createElement('div');
+      interior.className = 'interior';
+      while (cuerpo.firstChild) interior.appendChild(cuerpo.firstChild);
+      cuerpo.appendChild(interior);
       cuerpo.classList.add('plegable');
 
       var toggle = document.createElement('button');
@@ -2391,9 +2453,8 @@
           if (ba) { ba.textContent = 'Ocultar la ficha'; ba.setAttribute('aria-expanded', 'true'); }
         }
         destino.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        destino.classList.remove('flash');
-        void destino.offsetWidth;
         destino.classList.add('flash');
+        window.setTimeout(function () { destino.classList.remove('flash'); }, 700);
       }
     }
   });
