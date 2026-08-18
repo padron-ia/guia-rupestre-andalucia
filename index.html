@@ -539,14 +539,27 @@
   .chipf:focus-visible { outline: 2px solid var(--rust); outline-offset: 2px; }
 
   .ajustes summary {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: .06em;
-    text-transform: uppercase;
-    color: var(--faint);
+    font-family: var(--body);
+    font-size: 13px;
+    color: var(--muted);
     cursor: pointer;
-    padding: 4px 0;
+    padding: 10px 0 4px;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
+  .ajustes summary::-webkit-details-marker { display: none; }
+  .ajustes summary::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: rotate(-45deg);
+    transition: transform 180ms var(--ease-out);
+  }
+  .ajustes[open] summary::before { transform: rotate(45deg); }
   .ajustes summary:focus-visible { outline: 2px solid var(--rust); outline-offset: 2px; }
   .ajustes .fila { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; margin-top: 10px; }
   .ajustes .et {
@@ -555,6 +568,11 @@
     letter-spacing: .07em;
     text-transform: uppercase;
     color: var(--faint);
+  }
+  .chipf.mas { display: none; }
+  @media (max-width: 640px) {
+    .chipf.mas { display: inline-block; }
+    .chips[data-mas="0"] .chipf.secundario { display: none; }
   }
   .conteo { font-family: var(--mono); font-size: 11px; color: var(--faint); letter-spacing: .04em; }
 
@@ -732,33 +750,43 @@
     position: sticky;
     top: 0;
     z-index: 8;
-    background: color-mix(in srgb, var(--bg) 82%, transparent);
+    background: color-mix(in srgb, var(--surface) 88%, transparent);
     backdrop-filter: saturate(180%) blur(14px);
     -webkit-backdrop-filter: saturate(180%) blur(14px);
     border-bottom: 1px solid var(--line);
-    margin: 0 -16px 24px;
-    padding: 8px 16px;
+    box-shadow: 0 1px 0 color-mix(in srgb, var(--ink) 6%, transparent);
+    margin: 0 -16px 20px;
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px));
+    padding-top: calc(10px + env(safe-area-inset-top, 0px));
     display: none;
     gap: 6px;
     overflow-x: auto;
+    scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
+    /* el desvanecido del borde dice que la fila sigue */
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 14px, #000 calc(100% - 22px), transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0, #000 14px, #000 calc(100% - 22px), transparent 100%);
   }
+  .saltos::-webkit-scrollbar { display: none; }
   .saltos a {
-    font-family: var(--mono);
-    font-size: 12px;
-    letter-spacing: .04em;
+    font-family: var(--body);
+    font-size: 13.5px;
+    font-weight: 500;
+    letter-spacing: 0;
     text-decoration: none;
     color: var(--muted);
     border: 1px solid var(--line);
     background: var(--surface);
-    padding: 12px 13px;
-    border-radius: 2px;
+    padding: 10px 13px;
+    border-radius: 999px;
     white-space: nowrap;
+    scroll-snap-align: start;
   }
   .saltos a:hover, .saltos a:focus-visible { border-color: var(--rust); color: var(--rust); }
   @media (max-width: 640px) { .saltos { display: flex; } }
 
-  section[id] { scroll-margin-top: 56px; }
+  section[id] { scroll-margin-top: 68px; }
+  .saltos { scroll-snap-type: x proximity; }
 
   /* ---------- botón de volver arriba ---------- */
 
@@ -904,7 +932,11 @@
     .verdict p { font-size: 14.5px; }
 
     .toolbar { padding: 14px 16px 16px; margin: -52px 0 46px; }
-    .progress { padding: 16px 18px 18px; }
+    .progress { padding: 14px 18px 16px; gap: 10px 18px; }
+    .progress .count { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+    .progress .count .n { font-size: 1.9rem; }
+    .progress .count .k { margin-top: 0; flex: 1 1 100%; }
+    .bar { flex-basis: 100%; }
     .alert { padding: 18px 18px 20px; }
     .out > div, .route, .entry { padding-left: 18px; padding-right: 18px; }
   }
@@ -940,15 +972,16 @@
       <button class="chipf" type="button" data-f="pendientes" aria-pressed="false">Pendientes</button>
       <button class="chipf" type="button" data-f="visitadas" aria-pressed="false">Visitadas</button>
       <button class="chipf" type="button" data-f="quiero" aria-pressed="false">★ Quiero ir</button>
-      <button class="chipf" type="button" data-f="notas" aria-pressed="false">Con nota</button>
-      <button class="chipf" type="button" data-f="dia" aria-pressed="false">Cabe en un día</button>
-      <button class="chipf" type="button" data-f="fuera" aria-pressed="false">Dormir fuera</button>
-      <button class="chipf" type="button" data-f="reserva" aria-pressed="false">Reserva online</button>
-      <button class="chipf" type="button" data-f="gestion" aria-pressed="false">Hay que llamar</button>
+      <button class="chipf secundario" type="button" data-f="notas" aria-pressed="false">Con nota</button>
+      <button class="chipf secundario" type="button" data-f="dia" aria-pressed="false">Cabe en un día</button>
+      <button class="chipf secundario" type="button" data-f="fuera" aria-pressed="false">Dormir fuera</button>
+      <button class="chipf secundario" type="button" data-f="reserva" aria-pressed="false">Reserva online</button>
+      <button class="chipf secundario" type="button" data-f="gestion" aria-pressed="false">Hay que llamar</button>
+      <button class="chipf mas" type="button" id="mas-filtros" aria-expanded="false">Más filtros +</button>
     </div>
     <p class="conteo" id="conteo">Mostrando las 11</p>
     <details class="ajustes">
-      <summary>⚙️ Ajustes</summary>
+      <summary>Ajustes de la guía</summary>
       <div class="fila">
         <span class="et">Tema</span>
         <button class="chipf" type="button" data-tema="auto" aria-pressed="true">Auto</button>
@@ -1880,7 +1913,7 @@
       confirmación</strong>.</p>
     <p>Lo que marquéis como visitado se guarda en este navegador. Para que lo tengáis los dos, usad
       «Compartir progreso»: copia un enlace que ya lleva dentro las que habéis hecho.</p>
-    <p>Versión de la guía: <strong id="sello-version">18 de agosto de 2026, 12:04</strong>. En la web
+    <p>Versión de la guía: <strong id="sello-version">18 de agosto de 2026, 12:11</strong>. En la web
       publicada, cuando suba cambios os avisa abajo con un botón para actualizar — así la copia
       guardada en el móvil no se queda atrás.</p>
     <p>Fuentes principales:
@@ -2394,6 +2427,8 @@
       return;
     }
 
+    if (t.closest('#mas-filtros')) return;
+
     var chip = t.closest('.chipf[data-f]');
     if (chip) {
       filtro = chip.getAttribute('data-f');
@@ -2483,6 +2518,18 @@
     ev.preventDefault();
     pin.dispatchEvent(new MouseEvent('click', { bubbles: true }));
   });
+
+  (function () {
+    var chips = document.getElementById('filtros');
+    var mas = document.getElementById('mas-filtros');
+    chips.setAttribute('data-mas', '0');
+    mas.addEventListener('click', function () {
+      var abierto = chips.getAttribute('data-mas') === '1';
+      chips.setAttribute('data-mas', abierto ? '0' : '1');
+      mas.textContent = abierto ? 'Más filtros +' : 'Menos filtros −';
+      mas.setAttribute('aria-expanded', abierto ? 'false' : 'true');
+    });
+  })();
 
   document.getElementById('share').addEventListener('click', function () {
     var url = window.location.href.split('#')[0] + comoHash();
