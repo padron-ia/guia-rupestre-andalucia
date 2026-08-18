@@ -1,5 +1,5 @@
 /* Guarda la guia en el movil para que funcione sin cobertura en la sierra. */
-var CACHE = 'rupestre-v20';
+var CACHE = 'rupestre-v21';
 var ESENCIALES = ['./', './index.html', './manifest.webmanifest', './icono.svg'];
 
 self.addEventListener('install', function (ev) {
