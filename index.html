@@ -674,6 +674,38 @@
   footer p { max-width: 74ch; }
   footer a { color: var(--muted); }
 
+  /* ---------- navegación rápida ---------- */
+
+  .saltos {
+    position: sticky;
+    top: 0;
+    z-index: 8;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+    margin: 0 -16px 24px;
+    padding: 8px 16px;
+    display: none;
+    gap: 6px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .saltos a {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: .04em;
+    text-decoration: none;
+    color: var(--muted);
+    border: 1px solid var(--line);
+    background: var(--surface);
+    padding: 9px 12px;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+  .saltos a:hover, .saltos a:focus-visible { border-color: var(--rust); color: var(--rust); }
+  @media (max-width: 640px) { .saltos { display: flex; } }
+
+  section[id] { scroll-margin-top: 56px; }
+
   /* ---------- botón de volver arriba ---------- */
 
   .arriba {
@@ -710,7 +742,7 @@
 
     /* objetivos táctiles cómodos */
     .btn { padding: 12px 14px; font-size: 12.5px; }
-    .chipf { padding: 11px 13px; font-size: 12px; }
+    .chipf { padding: 12px 14px; font-size: 12px; }
     .tick, .star { width: 42px; height: 42px; font-size: 16px; }
     .toolbar input[type="search"] { font-size: 16px; padding: 13px 12px; }
     .planbox input[type="date"] { font-size: 16px; padding: 11px 12px; flex: 1 1 100%; }
@@ -720,8 +752,8 @@
 
     /* el mapa, legible */
     svg.map { min-height: 300px; }
-    .pin .lbl { font-size: 14px; }
-    .capital text { font-size: 12px; }
+    .pin .lbl { font-size: 16px; }
+    .capital text { font-size: 13px; }
     .prov { font-size: 11px; letter-spacing: 1px; }
     .origin text { font-size: 15px; }
 
@@ -753,20 +785,45 @@
       color: var(--faint);
     }
 
-    /* fichas plegadas: la cabecera y los botones siempre a mano */
+    /* los botones largos rompen línea y sueltan su coletilla */
+    .btn { white-space: normal; }
+    .btn span { display: none; }
+    .acts .btn { flex: 1 1 calc(50% - 4px); text-align: center; }
+
+    /* la ficha se ordena para usarla, no para leerla:
+       qué cuesta y a qué hora → qué hay que saber → botones → el texto */
+    article.card { display: flex; flex-direction: column; }
+    .card-head { order: 1; }
+    .fromhome { order: 2; }
+    .datosclave { order: 3; }
+    .avisoclave { order: 4; }
+    .cardfoot { order: 5; border-top: 0; padding-top: 14px; }
+    .plegable { order: 6; }
+    .resumen { display: none; }
+
     article.card .plegable { display: none; }
     article.card[data-abierta="1"] .plegable { display: block; }
-    .resumen {
-      padding: 16px 18px 0;
-      margin: 0;
-      font-size: 15px;
+
+    .datosclave {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 14px;
+      padding: 12px 18px 0;
+      font-family: var(--mono);
+      font-size: 12.5px;
+      font-variant-numeric: tabular-nums;
       color: var(--muted);
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
     }
-    article.card[data-abierta="1"] .resumen { display: none; }
+    .datosclave b { color: var(--ink); font-weight: 600; }
+    .avisoclave {
+      margin: 12px 18px 0;
+      padding: 10px 12px;
+      background: var(--surface-2);
+      border-left: 2px solid var(--ocre);
+      font-size: 13.5px;
+      color: var(--muted);
+    }
+    .avisoclave strong { color: var(--ink); }
     .card-head, .card-body { padding-left: 18px; padding-right: 18px; }
     .card-head h3 { font-size: 1.32rem; }
     .cardfoot { margin: 0 18px; }
@@ -1750,7 +1807,7 @@
       confirmación</strong>.</p>
     <p>Lo que marquéis como visitado se guarda en este navegador. Para que lo tengáis los dos, usad
       «Compartir progreso»: copia un enlace que ya lleva dentro las que habéis hecho.</p>
-    <p>Versión de la guía: <strong id="sello-version">18 de agosto de 2026, 11:47</strong>. En la web
+    <p>Versión de la guía: <strong id="sello-version">18 de agosto de 2026, 11:49</strong>. En la web
       publicada, cuando suba cambios os avisa abajo con un botón para actualizar — así la copia
       guardada en el móvil no se queda atrás.</p>
     <p>Fuentes principales:
@@ -2061,6 +2118,36 @@
       resumen.className = 'resumen';
       resumen.textContent = lede ? lede.textContent : '';
       cuerpo.parentNode.insertBefore(resumen, cuerpo);
+
+      // Lo que de verdad hace falta en la puerta: qué cuesta, cuánto dura
+      // y a qué hora. Sale del propio contenido de la ficha.
+      var quiero = { 'Precio': 1, 'Duración': 1, 'Horarios': 1, 'Turnos': 1, 'Esfuerzo': 1 };
+      var trozos = [];
+      [].forEach.call(cuerpo.querySelectorAll('.specs dt'), function (dt) {
+        var et = dt.textContent.trim();
+        if (!quiero[et]) return;
+        var dd = dt.nextElementSibling;
+        if (!dd) return;
+        var txt = dd.textContent.replace(/\s+/g, ' ').trim();
+        if (txt.length > 58) txt = txt.slice(0, 56) + '…';
+        trozos.push('<b>' + et + ':</b> ' + txt);
+      });
+      if (trozos.length) {
+        var dc = document.createElement('div');
+        dc.className = 'datosclave';
+        dc.innerHTML = trozos.map(function (t) { return '<span>' + t + '</span>'; }).join('');
+        cuerpo.parentNode.insertBefore(dc, cuerpo);
+      }
+
+      // Y el aviso que arruina la visita si no lo lees.
+      var warn = cuerpo.querySelector('.verdict.warn p, .verdict p strong');
+      var aviso = ficha.querySelector('.verdict.warn p');
+      if (aviso) {
+        var av = document.createElement('div');
+        av.className = 'avisoclave';
+        av.innerHTML = '<strong>Ojo:</strong> ' + aviso.textContent.replace(/\s+/g, ' ').trim().slice(0, 150) + '…';
+        cuerpo.parentNode.insertBefore(av, cuerpo);
+      }
 
       cuerpo.classList.add('plegable');
 
@@ -2448,6 +2535,38 @@
       });
     }
   } catch (e) {}
+
+  // Con treinta pantallas de guía, en el móvil hace falta poder saltar.
+  (function () {
+    var mapa = [
+      ['El mapa', 'Mapa'],
+      ['Las once, de más cerca a más lejos', 'Lista'],
+      ['Fichas', 'Fichas'],
+      ['Lo que no vais a ver', 'Descartadas'],
+      ['Ocho salidas, de la más corta a la más larga', 'Salidas'],
+      ['Ocho avisos para septiembre', 'Avisos'],
+      ['Reservar y llegar', 'Reservar']
+    ];
+    var nav = document.createElement('nav');
+    nav.className = 'saltos';
+    nav.setAttribute('aria-label', 'Ir a una parte de la guía');
+    var secciones = document.querySelectorAll('section');
+    mapa.forEach(function (par, i) {
+      var destino = null;
+      [].forEach.call(secciones, function (s) {
+        var h = s.querySelector('h2');
+        if (h && h.textContent.trim().indexOf(par[0]) === 0) destino = s;
+      });
+      if (!destino) return;
+      if (!destino.id) destino.id = 's' + i;
+      var a = document.createElement('a');
+      a.href = '#' + destino.id;
+      a.textContent = par[1];
+      nav.appendChild(a);
+    });
+    var prog = document.querySelector('.progress');
+    prog.parentNode.insertBefore(nav, prog);
+  })();
 
   // Volver arriba: con esta longitud, en el móvil hace falta.
   var btnArriba = document.createElement('button');
