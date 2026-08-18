@@ -1653,9 +1653,9 @@
       confirmación</strong>.</p>
     <p>Lo que marquéis como visitado se guarda en este navegador. Para que lo tengáis los dos, usad
       «Compartir progreso»: copia un enlace que ya lleva dentro las que habéis hecho.</p>
-    <p>Versión de la guía: <strong>18 de agosto de 2026, 11:40</strong>. Cuando publique cambios, al abrirla
-      os avisa abajo con un botón para actualizar — la copia guardada en el móvil no se queda
-      atrás.</p>
+    <p>Versión de la guía: <strong id="sello-version">18 de agosto de 2026, 11:41</strong>. En la web
+      publicada, cuando suba cambios os avisa abajo con un botón para actualizar — así la copia
+      guardada en el móvil no se queda atrás.</p>
     <p>Fuentes principales:
       <a href="https://cuevadelapileta.com/visita">Cueva de la Pileta</a> ·
       <a href="https://www.ardales.es/5518/cueva-prehistorica-de-ardales">Ayuntamiento de Ardales</a> ·
@@ -2161,6 +2161,10 @@
   var estadoOffline = document.getElementById('offline-estado');
   var avisoVersion = document.getElementById('version-nueva');
   var recargando = false;
+
+  // En la copia de trabajo (el artefacto) no hay build que ponga la fecha.
+  var sello = document.getElementById('sello-version');
+  if (sello && sello.textContent.indexOf('FECHA_VERSION') !== -1) sello.textContent = 'copia de trabajo';
 
   function mostrarAvisoVersion() {
     if (!avisoVersion.hidden) return;
