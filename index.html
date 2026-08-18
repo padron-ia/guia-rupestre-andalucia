@@ -16,19 +16,21 @@
 <title>Andalucía Rupestre</title>
 <style>
   :root {
-    --bg: #E6E9E3;
-    --surface: #F6F8F3;
-    --surface-2: #EDF0E9;
-    --ink: #151914;
-    --muted: #58604F;
-    --faint: #7C8474;
-    --line: #CBD1C4;
-    --line-soft: #DDE2D7;
-    --rust: #9E3A1C;
-    --ocre: #7E6516;
-    --open: #4A6B36;
-    --sea: #DCE3DE;
-    --land: #EFF2EC;
+    /* Los colores salen de los materiales: caliza, óxido de hierro,
+       ocre amarillo y carbón — los pigmentos de estas cuevas. */
+    --bg: #E9E1D3;
+    --surface: #F4EEE3;
+    --surface-2: #E3DACA;
+    --ink: #221A12;
+    --muted: #6A5B4A;
+    --faint: #8C7C68;
+    --line: #CDBFA8;
+    --line-soft: #DED2BF;
+    --rust: #9B3312;
+    --ocre: #A97B1E;
+    --open: #4F6B33;
+    --sea: #DCD2C0;
+    --land: #EFE8DA;
     --shadow: 0 1px 2px rgba(21, 25, 20, .06), 0 8px 24px -16px rgba(21, 25, 20, .3);
     --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
     --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
@@ -40,36 +42,37 @@
 
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --bg: #111310;
-      --surface: #1A1D18;
-      --surface-2: #212520;
-      --ink: #E7EAE2;
-      --muted: #9BA394;
-      --faint: #7E8677;
-      --line: #2C312A;
-      --line-soft: #242820;
-      --rust: #DE7853;
-      --ocre: #C4A254;
-      --open: #8FB36A;
-      --sea: #171A16;
-      --land: #20241E;
+      /* De noche, la pared de la cueva bajo la luz de la lámpara. */
+      --bg: #14100C;
+      --surface: #1E1813;
+      --surface-2: #261F18;
+      --ink: #EFE5D6;
+      --muted: #A79781;
+      --faint: #8A7A66;
+      --line: #352C22;
+      --line-soft: #2A231B;
+      --rust: #D9663B;
+      --ocre: #D6A44E;
+      --open: #93B26A;
+      --sea: #1A1510;
+      --land: #221B15;
       --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px -16px rgba(0, 0, 0, .8);
     }
   }
   :root[data-theme="dark"] {
-    --bg: #111310;
-    --surface: #1A1D18;
-    --surface-2: #212520;
-    --ink: #E7EAE2;
-    --muted: #9BA394;
-    --faint: #7E8677;
-    --line: #2C312A;
-    --line-soft: #242820;
-    --rust: #DE7853;
-    --ocre: #C4A254;
-    --open: #8FB36A;
-    --sea: #171A16;
-    --land: #20241E;
+    --bg: #14100C;
+    --surface: #1E1813;
+    --surface-2: #261F18;
+    --ink: #EFE5D6;
+    --muted: #A79781;
+    --faint: #8A7A66;
+    --line: #352C22;
+    --line-soft: #2A231B;
+    --rust: #D9663B;
+    --ocre: #D6A44E;
+    --open: #93B26A;
+    --sea: #1A1510;
+    --land: #221B15;
     --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px -16px rgba(0, 0, 0, .8);
   }
 
@@ -744,6 +747,73 @@
   /* Piezas que solo existen para el móvil (se activan en su media query). */
   .resumen, .datosclave, .avisoclave { display: none; }
 
+
+  /* ---------- materia: la piedra ---------- */
+  /* Un grano finísimo generado en el propio CSS: la superficie deja de ser
+     un plano de color y pasa a parecer pared. */
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: .5;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+    mix-blend-mode: multiply;
+  }
+  :root[data-theme="dark"] body::before,
+  html:not([data-theme="light"]) body::before { mix-blend-mode: normal; opacity: .06; }
+  .wrap, .toast, .update, .arriba { position: relative; z-index: 1; }
+
+  /* ---------- glifos ---------- */
+
+  .glifo { width: 100%; height: 100%; display: block; fill: currentColor; }
+
+  .marca-portada {
+    position: absolute;
+    right: -10px;
+    top: 4px;
+    width: 190px;
+    height: 130px;
+    color: var(--rust);
+    opacity: .13;
+    pointer-events: none;
+  }
+  .masthead { position: relative; overflow: hidden; }
+
+  .sello-ficha {
+    width: 34px;
+    height: 34px;
+    color: var(--rust);
+    flex: 0 0 auto;
+    opacity: .85;
+  }
+  article.card[data-done="1"] .sello-ficha { color: var(--open); }
+
+  .glifo-seccion {
+    width: 26px;
+    height: 26px;
+    color: var(--ocre);
+    display: inline-block;
+    vertical-align: -4px;
+    margin-right: 10px;
+    opacity: .9;
+  }
+
+  /* ---------- la portada, con más presencia ---------- */
+
+  h1 {
+    font-size: clamp(2.9rem, 11vw, 5.2rem);
+    line-height: .95;
+    letter-spacing: -.035em;
+  }
+  .masthead { border-bottom-color: var(--rust); }
+  .eyebrow { color: var(--rust); font-weight: 600; }
+
+  /* Las distancias, como cifras grandes: es el dato que manda al planificar. */
+  .fromhome b { font-size: 1.05em; letter-spacing: -.01em; }
+
   /* ---------- navegación rápida ---------- */
 
   .saltos {
@@ -942,9 +1012,87 @@
   }
 </style>
 
+<svg class="glifos" aria-hidden="true" focusable="false" width="0" height="0" style="position:absolute">
+  <defs>
+    <!-- Figuras tomadas del repertorio real de estas cuevas: bóvidos y
+         cabras paleolíticas, manos en negativo, el Indalo, los barcos de
+         Laja Alta, soliformes esquemáticos e ídolos megalíticos. -->
+
+    <symbol id="g-bovido" viewBox="0 0 120 80">
+      <path d="M18 46c-2-11 6-20 20-23 14-3 34-3 48 2 9 3 15 9 16 16 1 6-3 10-9 11l-8 1-3 20h-6l1-20-34 1-3 19h-6l2-19c-9-1-16-3-18-8z"/>
+      <path d="M20 25c-5-4-9-3-12 1 4 1 7 3 9 6zM30 21c-4-6-4-10-1-13 2 4 5 8 9 10z"/>
+    </symbol>
+
+    <symbol id="g-cabra" viewBox="0 0 120 80">
+      <path d="M24 50c-1-12 8-21 23-23 15-2 32-1 44 4 8 3 12 9 12 15 0 5-4 8-10 8l-6 1-3 17h-6l2-17-32 1-3 16h-6l2-16c-9-1-16-2-17-6z"/>
+      <path d="M28 27c-9-9-12-17-9-24 3 8 8 14 15 18zM40 24c-6-9-7-16-4-21 2 7 6 12 11 16z"/>
+    </symbol>
+
+    <symbol id="g-ciervo" viewBox="0 0 120 80">
+      <path d="M22 52c-1-13 9-22 25-24 16-2 33-1 45 4 8 4 12 10 11 16-1 5-5 8-11 8l-5 1-4 16h-6l3-16-33 1-4 15h-6l3-15c-10-1-17-2-18-6z"/>
+      <path d="M30 28c-6-5-9-12-8-20 3 6 6 10 10 13-3-7-3-13 0-17 1 6 4 11 8 14l-3-13c3 4 6 9 7 15z"/>
+    </symbol>
+
+    <symbol id="g-mano" viewBox="0 0 80 100">
+      <rect x="34" y="18" width="12" height="42" rx="6"/>
+      <rect x="19" y="26" width="11" height="34" rx="5.5" transform="rotate(-14 24 43)"/>
+      <rect x="50" y="26" width="11" height="34" rx="5.5" transform="rotate(14 56 43)"/>
+      <rect x="7" y="40" width="10" height="28" rx="5" transform="rotate(-27 12 54)"/>
+      <rect x="63" y="40" width="10" height="28" rx="5" transform="rotate(27 68 54)"/>
+      <path d="M40 52c16 0 27 10 27 24v14c0 6-5 10-11 10H24c-6 0-11-4-11-10V76c0-14 11-24 27-24z"/>
+    </symbol>
+
+    <symbol id="g-indalo" viewBox="0 0 80 100">
+      <circle cx="40" cy="34" r="8"/>
+      <rect x="36" y="42" width="8" height="34" rx="4"/>
+      <path d="M40 76l-14 20h7l7-11 7 11h7z"/>
+      <path d="M6 40c0-16 15-28 34-28s34 12 34 28h-7c0-12-12-21-27-21S13 28 13 40z"/>
+    </symbol>
+
+    <symbol id="g-barco" viewBox="0 0 120 80">
+      <path d="M10 46h100c-4 14-16 22-34 22H44c-18 0-30-8-34-22z"/>
+      <rect x="57" y="8" width="6" height="38" rx="3"/>
+      <path d="M63 12c14 2 24 8 28 16H63z"/>
+      <path d="M20 48l-8 14h6l7-12zM36 48l-6 14h6l6-13zM84 48l6 14h-6l-6-13zM100 48l8 14h-6l-7-12z"/>
+    </symbol>
+
+    <symbol id="g-soliforme" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="18"/>
+      <g>
+        <rect x="47" y="4" width="6" height="16" rx="3"/>
+        <rect x="47" y="80" width="6" height="16" rx="3"/>
+        <rect x="4" y="47" width="16" height="6" rx="3"/>
+        <rect x="80" y="47" width="16" height="6" rx="3"/>
+        <rect x="16" y="16" width="6" height="16" rx="3" transform="rotate(-45 19 24)"/>
+        <rect x="78" y="68" width="6" height="16" rx="3" transform="rotate(-45 81 76)"/>
+        <rect x="78" y="16" width="6" height="16" rx="3" transform="rotate(45 81 24)"/>
+        <rect x="16" y="68" width="6" height="16" rx="3" transform="rotate(45 19 76)"/>
+      </g>
+    </symbol>
+
+    <symbol id="g-idolo" viewBox="0 0 80 100">
+      <path d="M22 10h36c5 0 9 4 9 9v62c0 5-4 9-9 9H22c-5 0-9-4-9-9V19c0-5 4-9 9-9z"/>
+      <circle cx="31" cy="34" r="7" fill="var(--surface)"/>
+      <circle cx="49" cy="34" r="7" fill="var(--surface)"/>
+      <rect x="24" y="52" width="32" height="4" rx="2" fill="var(--surface)"/>
+      <rect x="24" y="62" width="32" height="4" rx="2" fill="var(--surface)"/>
+      <rect x="24" y="72" width="32" height="4" rx="2" fill="var(--surface)"/>
+    </symbol>
+
+    <symbol id="g-antropo" viewBox="0 0 80 100">
+      <circle cx="40" cy="20" r="9"/>
+      <path d="M40 30c9 0 16 8 16 18s-7 18-16 18-16-8-16-18 7-18 16-18z"/>
+      <rect x="36" y="64" width="8" height="30" rx="4"/>
+      <path d="M40 94l-13 0M40 94l13 0" stroke="currentColor" stroke-width="7" stroke-linecap="round" fill="none"/>
+      <path d="M17 40l-10-6M63 40l10-6" stroke="currentColor" stroke-width="7" stroke-linecap="round" fill="none"/>
+    </symbol>
+  </defs>
+</svg>
+
 <div class="wrap">
 
   <header class="masthead">
+    <svg class="marca-portada" aria-hidden="true"><use href="#g-bovido"/></svg>
     <p class="eyebrow">Guía de campo · desde Granada · septiembre 2026</p>
     <h1>Andalucía Rupestre</h1>
     <p class="standfirst">Las once cuevas y abrigos con arte prehistórico que de verdad se pueden
@@ -1913,7 +2061,7 @@
       confirmación</strong>.</p>
     <p>Lo que marquéis como visitado se guarda en este navegador. Para que lo tengáis los dos, usad
       «Compartir progreso»: copia un enlace que ya lleva dentro las que habéis hecho.</p>
-    <p>Versión de la guía: <strong id="sello-version">18 de agosto de 2026, 12:11</strong>. En la web
+    <p>Versión de la guía: <strong id="sello-version">18 de agosto de 2026, 12:28</strong>. En la web
       publicada, cuando suba cambios os avisa abajo con un botón para actualizar — así la copia
       guardada en el móvil no se queda atrás.</p>
     <p>Fuentes principales:
@@ -1960,6 +2108,13 @@
     soto:         { n: 'Dolmen de Soto',            corto: 'el Dolmen de Soto', plan: 'fuera', via: 'gestion', min: 200, destino: 'Dolmen de Soto, Trigueros, Huelva', tel: '627940357' }
   };
   var ORDEN = ['moclin', 'zuheros', 'graja', 'victoria', 'ardales', 'letreros', 'pileta', 'aldeaquemada', 'lajaalta', 'bacinete', 'soto'];
+
+  // El glifo de cada sitio sale de lo que de verdad hay pintado allí.
+  var GLIFOS = {
+    moclin: 'g-soliforme', zuheros: 'g-ciervo', graja: 'g-antropo', victoria: 'g-cabra',
+    ardales: 'g-mano', letreros: 'g-indalo', pileta: 'g-bovido', aldeaquemada: 'g-antropo',
+    lajaalta: 'g-barco', bacinete: 'g-soliforme', soto: 'g-idolo'
+  };
 
   var datos = { hechas: {}, favs: {}, notas: {} };
   var filtro = 'todas';
@@ -2248,6 +2403,17 @@
         av.className = 'avisoclave';
         av.innerHTML = '<strong>Ojo:</strong> ' + aviso.textContent.replace(/\s+/g, ' ').trim().slice(0, 150) + '…';
         cuerpo.parentNode.insertBefore(av, cuerpo);
+      }
+
+      var cab = ficha.querySelector('.card-head');
+      if (cab && GLIFOS[id]) {
+        var sello = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        sello.setAttribute('class', 'sello-ficha');
+        sello.setAttribute('aria-hidden', 'true');
+        var uso = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+        uso.setAttribute('href', '#' + GLIFOS[id]);
+        sello.appendChild(uso);
+        cab.insertBefore(sello, cab.firstChild);
       }
 
       var interior = document.createElement('div');
