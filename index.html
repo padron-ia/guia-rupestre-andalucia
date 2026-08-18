@@ -1,0 +1,1687 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="Guia de las cuevas con arte rupestre visitables en Andalucia, desde Granada.">
+</head>
+<body>
+<title>Andalucía Rupestre</title>
+<style>
+  :root {
+    --bg: #E6E9E3;
+    --surface: #F6F8F3;
+    --surface-2: #EDF0E9;
+    --ink: #151914;
+    --muted: #58604F;
+    --faint: #7C8474;
+    --line: #CBD1C4;
+    --line-soft: #DDE2D7;
+    --rust: #9E3A1C;
+    --ocre: #7E6516;
+    --open: #4A6B36;
+    --sea: #DCE3DE;
+    --land: #EFF2EC;
+    --shadow: 0 1px 2px rgba(21, 25, 20, .06), 0 8px 24px -16px rgba(21, 25, 20, .3);
+    --display: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    --body: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #111310;
+      --surface: #1A1D18;
+      --surface-2: #212520;
+      --ink: #E7EAE2;
+      --muted: #9BA394;
+      --faint: #7E8677;
+      --line: #2C312A;
+      --line-soft: #242820;
+      --rust: #DE7853;
+      --ocre: #C4A254;
+      --open: #8FB36A;
+      --sea: #171A16;
+      --land: #20241E;
+      --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px -16px rgba(0, 0, 0, .8);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #111310;
+    --surface: #1A1D18;
+    --surface-2: #212520;
+    --ink: #E7EAE2;
+    --muted: #9BA394;
+    --faint: #7E8677;
+    --line: #2C312A;
+    --line-soft: #242820;
+    --rust: #DE7853;
+    --ocre: #C4A254;
+    --open: #8FB36A;
+    --sea: #171A16;
+    --land: #20241E;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px -16px rgba(0, 0, 0, .8);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 940px; margin: 0 auto; padding: 0 24px 96px; }
+
+  /* ---------- cabecera ---------- */
+
+  .masthead { border-bottom: 2px solid var(--ink); padding: 56px 0 20px; margin-bottom: 32px; }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin: 0 0 18px;
+  }
+  h1 {
+    font-family: var(--display);
+    font-size: clamp(2.4rem, 6vw, 3.9rem);
+    line-height: 1.02;
+    font-weight: 600;
+    letter-spacing: -.02em;
+    margin: 0 0 18px;
+    text-wrap: balance;
+  }
+  .standfirst {
+    font-family: var(--display);
+    font-size: clamp(1.05rem, 2.2vw, 1.3rem);
+    line-height: 1.5;
+    color: var(--muted);
+    max-width: 62ch;
+    margin: 0 0 24px;
+  }
+  .stamp { font-family: var(--mono); font-size: 11.5px; color: var(--faint); letter-spacing: .03em; }
+
+  /* ---------- progreso ---------- */
+
+  .progress {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 20px 22px 22px;
+    margin-bottom: 56px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px 28px;
+    align-items: center;
+  }
+  .progress .count { flex: 1 1 auto; min-width: 200px; }
+  .progress .count .n {
+    font-family: var(--display);
+    font-size: 2.4rem;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .progress .count .of { font-family: var(--display); font-size: 1.3rem; color: var(--faint); }
+  .progress .count .k {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--faint);
+    display: block;
+    margin-top: 6px;
+  }
+  .bar { flex: 1 1 200px; height: 6px; background: var(--surface-2); border: 1px solid var(--line); position: relative; }
+  .bar i { display: block; height: 100%; background: var(--open); width: 0; transition: width .35s ease; }
+  @media (prefers-reduced-motion: reduce) { .bar i { transition: none; } }
+  .progress .tools { display: flex; flex-wrap: wrap; gap: 8px; }
+
+  /* ---------- aviso destacado ---------- */
+
+  .alert {
+    border: 1px solid var(--rust);
+    border-left-width: 3px;
+    background: var(--surface);
+    padding: 20px 24px 22px;
+    margin: 0 0 56px;
+  }
+  .alert h2 { font-size: 1.3rem; margin: 0 0 10px; }
+  .alert p { margin: 0 0 12px; font-size: 15px; color: var(--muted); max-width: 70ch; }
+  .alert p:last-child { margin-bottom: 0; }
+  .alert strong { color: var(--ink); }
+  .alert .no { color: var(--rust); font-weight: 600; }
+
+  /* ---------- aptitud con el niño ---------- */
+
+  .kid {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding: 3px 8px 4px;
+    border-radius: 2px;
+    display: inline-block;
+    border: 1px solid currentColor;
+  }
+  .kid.si { color: var(--open); }
+  .kid.duda { color: var(--ocre); }
+  .kid.no { color: var(--rust); background: var(--surface-2); }
+
+  .pin[data-kid="no"] .dot { stroke-dasharray: 3 2.4; opacity: .75; }
+  .pin[data-kid="no"] .lbl { opacity: .6; font-weight: 400; }
+  .maplegend i.i-nokid { border: 2px dashed var(--rust); background: var(--surface); }
+
+  /* ---------- mapa ---------- */
+
+  .mapwrap { border: 1px solid var(--line); background: var(--land); padding: 8px; margin-bottom: 18px; }
+  svg.map { display: block; width: 100%; height: auto; }
+  .coast { fill: var(--sea); stroke: var(--line); stroke-width: 1.2; }
+  .provline { fill: none; stroke: var(--faint); stroke-width: .7; stroke-dasharray: 2.5 2.5; opacity: .55; }
+  .prov {
+    fill: var(--faint);
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 1.6px;
+    opacity: .5;
+    text-anchor: middle;
+  }
+  .capital circle { fill: var(--faint); opacity: .5; }
+  .capital text { fill: var(--faint); font-size: 8.5px; font-family: var(--mono); letter-spacing: .04em; }
+
+  .pin { cursor: pointer; }
+  .pin .halo { fill: var(--rust); opacity: 0; transition: opacity .2s ease; }
+  .pin .dot { fill: var(--surface); stroke: var(--rust); stroke-width: 2.4; }
+  .pin .lbl { fill: var(--ink); font-size: 10px; font-family: var(--body); font-weight: 600; }
+  .pin:hover .halo, .pin:focus-visible .halo { opacity: .18; }
+  .pin:focus-visible { outline: none; }
+  .pin:focus-visible .dot { stroke-width: 3.6; }
+  .pin[data-done="1"] .dot { fill: var(--open); stroke: var(--open); }
+  .pin[data-done="1"] .lbl { fill: var(--open); }
+  .pin[data-manage="1"] .dot { stroke: var(--ocre); }
+  .pin[data-manage="1"][data-done="1"] .dot { stroke: var(--open); }
+
+  .origin .dot { fill: var(--ink); stroke: var(--ink); }
+  .origin .ring { fill: none; stroke: var(--ink); stroke-width: 1; opacity: .35; }
+  .origin text { fill: var(--ink); font-size: 11px; font-weight: 700; font-family: var(--body); }
+
+  .maplegend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin: 0 0 40px;
+  }
+  .maplegend span { display: inline-flex; align-items: center; gap: 7px; }
+  .maplegend i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+  .maplegend i.i-open { border: 2px solid var(--rust); background: var(--surface); }
+  .maplegend i.i-manage { border: 2px solid var(--ocre); background: var(--surface); }
+  .maplegend i.i-done { background: var(--open); }
+  .maplegend i.i-origin { background: var(--ink); }
+
+  /* ---------- estructura ---------- */
+
+  section { margin-bottom: 72px; }
+
+  h2 {
+    font-family: var(--display);
+    font-size: clamp(1.5rem, 3.4vw, 2.05rem);
+    font-weight: 600;
+    letter-spacing: -.015em;
+    line-height: 1.15;
+    margin: 0 0 8px;
+    text-wrap: balance;
+  }
+  .sec-note { color: var(--muted); max-width: 66ch; margin: 0 0 32px; }
+  .rule { height: 1px; background: var(--line); border: 0; margin: 0 0 28px; }
+  p { max-width: 66ch; }
+
+  /* ---------- tabla ---------- */
+
+  .scroller { overflow-x: auto; border: 1px solid var(--line); background: var(--surface); }
+  table { border-collapse: collapse; width: 100%; min-width: 780px; font-size: 14px; }
+  th, td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--line-soft); vertical-align: top; }
+  thead th {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    color: var(--faint);
+    font-weight: 500;
+    border-bottom: 1px solid var(--line);
+    white-space: nowrap;
+  }
+  tbody tr:last-child td { border-bottom: 0; }
+  td.site { font-weight: 600; white-space: nowrap; }
+  td.num { font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; font-size: 13px; }
+  tr.dim td { color: var(--faint); }
+  tr.dim td.site { font-weight: 500; }
+  tr[data-done="1"] td.site { color: var(--open); }
+  td.check { width: 1%; padding-right: 0; }
+
+  /* ---------- marcar ---------- */
+
+  .tick {
+    appearance: none;
+    border: 1px solid var(--line);
+    background: var(--surface-2);
+    width: 22px;
+    height: 22px;
+    border-radius: 2px;
+    cursor: pointer;
+    display: inline-grid;
+    place-items: center;
+    padding: 0;
+    color: var(--faint);
+    font-size: 13px;
+    line-height: 1;
+  }
+  .tick:hover { border-color: var(--open); color: var(--open); }
+  .tick[aria-pressed="true"] { background: var(--open); border-color: var(--open); color: #F6F8F3; }
+  .tick:focus-visible { outline: 2px solid var(--rust); outline-offset: 2px; }
+
+  /* ---------- chips y botones ---------- */
+
+  .chip {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: 3px 8px 4px;
+    border: 1px solid currentColor;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+  .chip.open { color: var(--open); }
+  .chip.manage { color: var(--ocre); }
+  .chip.shut { color: var(--rust); }
+  .chip.done { color: #F6F8F3; background: var(--open); border-color: var(--open); }
+
+  .btn {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: .04em;
+    text-decoration: none;
+    color: var(--ink);
+    border: 1px solid var(--line);
+    background: var(--surface-2);
+    padding: 7px 12px;
+    border-radius: 2px;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+    cursor: pointer;
+    display: inline-block;
+  }
+  .btn:hover { border-color: var(--rust); color: var(--rust); }
+  .btn.primary { border-color: var(--rust); color: var(--rust); }
+  .btn.primary:hover { background: var(--rust); color: var(--surface); }
+  .btn span { color: var(--faint); }
+  .btn:hover span { color: inherit; }
+  .btn:focus-visible { outline: 2px solid var(--rust); outline-offset: 2px; }
+
+  /* ---------- fichas ---------- */
+
+  .cards { display: flex; flex-direction: column; gap: 28px; }
+
+  article.card { background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow); scroll-margin-top: 20px; }
+  article.card[data-done="1"] { border-color: var(--open); }
+  article.card.flash { animation: flash 1.2s ease; }
+  @keyframes flash { from { box-shadow: 0 0 0 3px var(--rust); } to { box-shadow: var(--shadow); } }
+  @media (prefers-reduced-motion: reduce) { article.card.flash { animation: none; } }
+
+  .card-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 10px 14px;
+    padding: 22px 24px 16px;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .card-head h3 {
+    font-family: var(--display);
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -.01em;
+    margin: 0;
+    flex: 1 1 auto;
+    min-width: 12ch;
+  }
+  .place { font-family: var(--mono); font-size: 11px; letter-spacing: .05em; color: var(--faint); text-transform: uppercase; }
+
+  .fromhome {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 16px;
+    padding: 12px 24px;
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--line-soft);
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: .03em;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .fromhome b { color: var(--ink); font-weight: 600; }
+  .fromhome .trip { color: var(--rust); }
+
+  .card-body { padding: 20px 24px 24px; }
+  .card-body > p { margin: 0 0 18px; }
+  .card-body > p:last-child { margin-bottom: 0; }
+  .lede { font-size: 1.02rem; }
+
+  .specs { display: grid; grid-template-columns: max-content 1fr; border-top: 1px solid var(--line-soft); margin: 0 0 20px; }
+  .specs dt {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--faint);
+    padding: 9px 20px 9px 0;
+    border-bottom: 1px solid var(--line-soft);
+    white-space: nowrap;
+  }
+  .specs dd { margin: 0; padding: 9px 0; border-bottom: 1px solid var(--line-soft); font-size: 14.5px; }
+  .specs .price { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+
+  .verdict { border-left: 2px solid var(--rust); padding: 2px 0 2px 16px; margin: 0 0 18px; }
+  .verdict:last-child { margin-bottom: 0; }
+  .verdict h4 {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin: 0 0 8px;
+    font-weight: 500;
+  }
+  .verdict p { margin: 0; font-size: 15px; color: var(--muted); }
+  .verdict p + p { margin-top: 10px; }
+  .verdict strong { color: var(--ink); }
+  .warn { border-left-color: var(--ocre); }
+  .warn h4 { color: var(--ocre); }
+
+  .cardfoot {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    margin: 0 24px;
+    padding: 16px 0 22px;
+    border-top: 1px solid var(--line-soft);
+  }
+  .cardfoot [data-mark] { border-color: var(--open); color: var(--open); margin-left: auto; }
+  .cardfoot [data-mark]:hover { background: var(--open); color: var(--surface); }
+  .visitstamp { font-family: var(--mono); font-size: 11px; color: var(--open); letter-spacing: .04em; }
+  @media (max-width: 640px) {
+    .cardfoot [data-mark] { margin-left: 0; }
+  }
+
+  /* ---------- descartes ---------- */
+
+  .out { display: flex; flex-direction: column; gap: 1px; background: var(--line); border: 1px solid var(--line); }
+  .out > div { background: var(--surface-2); padding: 16px 20px; }
+  .out h4 { font-family: var(--display); font-size: 1.1rem; font-weight: 600; margin: 0 0 4px; }
+  .out p { margin: 0; font-size: 14.5px; color: var(--muted); max-width: 74ch; }
+
+  /* ---------- rutas ---------- */
+
+  .routes { display: flex; flex-direction: column; gap: 1px; background: var(--line); border: 1px solid var(--line); }
+  .route { background: var(--surface); padding: 22px 24px; }
+  .route-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 12px; margin-bottom: 6px; }
+  .route-head h3 { font-family: var(--display); font-size: 1.25rem; font-weight: 600; margin: 0; }
+  .tag { font-family: var(--mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--rust); }
+  .dist {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .04em;
+    color: var(--faint);
+    font-variant-numeric: tabular-nums;
+    margin: 0 0 14px;
+  }
+  .dist b { color: var(--ink); }
+  .days { display: flex; flex-direction: column; gap: 8px; margin: 0 0 14px; padding: 0; list-style: none; }
+  .days li { display: flex; gap: 14px; font-size: 14.5px; align-items: baseline; }
+  .days .d {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--faint);
+    flex: 0 0 4.5em;
+    padding-top: 2px;
+  }
+  .route .why { font-size: 14px; color: var(--muted); margin: 0; font-style: italic; max-width: 70ch; }
+
+  /* ---------- avisos ---------- */
+
+  .notes { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 14px; }
+  .notes li { display: flex; gap: 16px; align-items: baseline; max-width: 74ch; }
+  .notes .marker { font-family: var(--mono); font-size: 11px; color: var(--rust); flex: 0 0 auto; padding-top: 1px; }
+
+  /* ---------- reservar y llegar ---------- */
+
+  .book { display: flex; flex-direction: column; gap: 1px; background: var(--line); border: 1px solid var(--line); }
+  .entry { background: var(--surface); padding: 16px 20px 18px; }
+  .entry-top { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; margin-bottom: 12px; }
+  .entry-top .who { font-weight: 600; font-size: 1.02rem; flex: 1 1 16ch; }
+  .entry-top .when { font-family: var(--mono); font-size: 10.5px; letter-spacing: .07em; text-transform: uppercase; color: var(--faint); }
+  .entry.urgent .when { color: var(--rust); }
+  .acts { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+  .meet { font-size: 13.5px; color: var(--muted); margin: 0; max-width: 74ch; }
+  .meet strong { color: var(--ink); }
+  .meet .flag { color: var(--rust); font-weight: 600; }
+
+  /* ---------- varios ---------- */
+
+  a { color: var(--rust); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  a:hover { color: var(--ink); }
+  a:focus-visible { outline: 2px solid var(--rust); outline-offset: 2px; border-radius: 1px; }
+
+  .toast {
+    position: fixed;
+    left: 50%;
+    bottom: 24px;
+    transform: translateX(-50%);
+    background: var(--ink);
+    color: var(--bg);
+    font-family: var(--mono);
+    font-size: 12.5px;
+    padding: 10px 16px;
+    border-radius: 2px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .25s ease;
+    z-index: 10;
+    max-width: 90vw;
+    text-align: center;
+  }
+  .toast[data-on="1"] { opacity: 1; }
+
+  body[data-filter="pending"] tr[data-done="1"],
+  body[data-filter="pending"] article.card[data-done="1"] { display: none; }
+
+  footer { border-top: 1px solid var(--line); padding-top: 24px; color: var(--faint); font-size: 13.5px; }
+  footer p { max-width: 74ch; }
+  footer a { color: var(--muted); }
+
+  @media (max-width: 640px) {
+    .wrap { padding: 0 18px 64px; }
+    .specs { grid-template-columns: 1fr; }
+    .specs dt { border-bottom: 0; padding-bottom: 0; }
+    .specs dd { padding-top: 2px; }
+    .days li { flex-direction: column; gap: 2px; }
+  }
+</style>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <p class="eyebrow">Guía de campo · desde Granada · septiembre 2026</p>
+    <h1>Andalucía Rupestre</h1>
+    <p class="standfirst">Las once cuevas y abrigos con arte prehistórico que de verdad se pueden
+      visitar, ordenadas por lo cerca que están de casa. Con lo que está cerrado señalado,
+      para no perder un viaje.</p>
+    <p class="stamp">Investigación cerrada 18-ago-2026 · distancias desde Granada · datos contrastados con webs oficiales y ayuntamientos</p>
+  </header>
+
+  <div class="progress">
+    <div class="count">
+      <span class="n" id="done-n">0</span><span class="of"> / 11</span>
+      <span class="k" id="done-k">Ninguna todavía · empieza por Zuheros</span>
+    </div>
+    <div class="bar"><i id="bar"></i></div>
+    <div class="tools">
+      <button class="btn" type="button" id="toggle-filter">Ver solo pendientes</button>
+      <button class="btn primary" type="button" id="share">Compartir progreso</button>
+    </div>
+  </div>
+
+  <div class="alert">
+    <h2>Dos tienen edad mínima</h2>
+    <p><span class="no">Cueva de Ardales: no admite menores de 8 años.</span>
+      <span class="no">Cueva de la Victoria: a partir de 10.</span> Es norma del gestor y no hay
+      excepción en la puerta. Van marcadas en el mapa con el borde discontinuo y avisadas en su
+      ficha. Las otras nueve no tienen límite de edad.</p>
+  </div>
+
+  <section>
+    <h2>El mapa</h2>
+    <p class="sec-note">Toca cualquier punto para saltar a su ficha. Los que marques como visitados
+      se ponen en verde aquí y en toda la página. Los límites provinciales son aproximados: el mapa
+      es un esquema para situarse, no una carta de navegación. Para conducir, usa el botón «Ruta
+      desde Granada» de cada ficha.</p>
+
+    <div class="mapwrap">
+      <svg class="map" viewBox="0 0 560 340" role="img" aria-label="Mapa esquemático de Andalucía dividido por provincias, con las once cuevas visitables y Granada como punto de partida">
+
+        <path class="coast" d="M16.8,176.5 L13.2,138.8 L44.1,94.4 L114.7,72.2 L211.7,50.0 L291.1,38.9 L361.6,38.9 L396.9,27.8 L445.4,38.9 L480.7,83.3 L524.8,155.4 L511.6,172.1 L502.7,199.8 L477.2,230.7 L453.0,218.2 L404.0,227.6 L359.9,230.7 L329.0,228.7 L280.3,230.7 L239.0,254.2 L216.1,264.2 L189.6,296.4 L175.5,309.7 L133.2,279.7 L115.7,252.3 L110.3,223.1 L92.6,202.0 L57.4,179.8 Z"></path>
+
+        <g aria-hidden="true">
+          <path class="provline" d="M88.2,83.3 L97.0,133.2 L101.4,172.1 L105.8,205.4"></path>
+          <path class="provline" d="M105.8,205.4 L136.7,202.0 L167.6,205.4 L189.6,216.5"></path>
+          <path class="provline" d="M189.6,216.5 L198.5,244.2 L207.3,266.4"></path>
+          <path class="provline" d="M198.5,61.1 L211.7,122.1 L220.5,161.0"></path>
+          <path class="provline" d="M220.5,161.0 L189.6,216.5"></path>
+          <path class="provline" d="M220.5,161.0 L255.8,166.5 L291.1,172.1"></path>
+          <path class="provline" d="M291.1,38.9 L299.9,99.9 L295.5,166.5"></path>
+          <path class="provline" d="M291.1,172.1 L299.9,194.3 L329.0,228.7"></path>
+          <path class="provline" d="M295.5,166.5 L335.2,144.3 L388.1,122.1 L427.8,94.4"></path>
+          <path class="provline" d="M427.8,94.4 L419.0,155.4 L405.7,210.9 L404.0,227.6"></path>
+          <path class="provline" d="M427.8,94.4 L445.4,38.9"></path>
+
+          <text class="prov" x="52" y="128">HUELVA</text>
+          <text class="prov" x="152" y="118">SEVILLA</text>
+          <text class="prov" x="250" y="70">CÓRDOBA</text>
+          <text class="prov" x="337" y="80">JAÉN</text>
+          <text class="prov" x="145" y="243">CÁDIZ</text>
+          <text class="prov" x="262" y="196">MÁLAGA</text>
+          <text class="prov" x="398" y="203">GRANADA</text>
+          <text class="prov" x="458" y="163">ALMERÍA</text>
+        </g>
+
+        <g class="capital">
+          <circle cx="142.5" cy="156.6" r="2.4"></circle><text x="148" y="169">Sevilla</text>
+          <circle cx="248.8" cy="101.2" r="2.4"></circle><text x="254" y="104">Córdoba</text>
+          <circle cx="336.5" cy="113.3" r="2.4"></circle><text x="331" y="116" text-anchor="end">Jaén</text>
+          <circle cx="453.0" cy="218.2" r="2.4"></circle><text x="448" y="228" text-anchor="end">Almería</text>
+          <circle cx="115.7" cy="252.3" r="2.4"></circle><text x="111" y="255" text-anchor="end">Cádiz</text>
+          <circle cx="57.4" cy="171.3" r="2.4"></circle><text x="57" y="164" text-anchor="middle">Huelva</text>
+          <circle cx="280.3" cy="230.7" r="2.4"></circle><text x="275" y="241" text-anchor="end">Málaga</text>
+          <circle cx="214.7" cy="228.4" r="2.4"></circle><text x="214" y="221" text-anchor="middle">Ronda</text>
+        </g>
+
+        <g class="origin">
+          <circle class="ring" cx="353.0" cy="180.1" r="11"></circle>
+          <circle class="ring" cx="353.0" cy="180.1" r="17"></circle>
+          <circle class="dot" cx="353.0" cy="180.1" r="4.5"></circle>
+          <text x="362" y="177">Granada</text>
+          <text x="362" y="190" style="font-size:8px;font-weight:400;opacity:.6">salimos de aquí</text>
+        </g>
+
+        <g class="pin" data-id="zuheros" tabindex="0" role="button" aria-label="Cueva de los Murciélagos, Zuheros">
+          <circle class="halo" cx="292.1" cy="139.0" r="13"></circle>
+          <circle class="dot" cx="292.1" cy="139.0" r="5"></circle>
+          <text class="lbl" x="300" y="142">Zuheros</text>
+        </g>
+        <g class="pin" data-id="graja" data-manage="1" tabindex="0" role="button" aria-label="Cueva de la Graja, Jimena de Jaén">
+          <circle class="halo" cx="364.3" cy="107.7" r="13"></circle>
+          <circle class="dot" cx="364.3" cy="107.7" r="5"></circle>
+          <text class="lbl" x="372" y="111">La Graja</text>
+        </g>
+        <g class="pin" data-id="victoria" data-kid="no" tabindex="0" role="button" aria-label="Cueva de la Victoria, Rincón de la Victoria. No admite menores de 10 años">
+          <circle class="halo" cx="292.5" cy="228.4" r="13"></circle>
+          <circle class="dot" cx="292.5" cy="228.4" r="5"></circle>
+          <text class="lbl" x="300" y="224">La Victoria</text>
+        </g>
+        <g class="pin" data-id="ardales" data-kid="no" tabindex="0" role="button" aria-label="Cueva de Ardales. No admite menores de 8 años">
+          <circle class="halo" cx="244.4" cy="213.9" r="13"></circle>
+          <circle class="dot" cx="244.4" cy="213.9" r="5"></circle>
+          <text class="lbl" x="252" y="211">Ardales</text>
+        </g>
+        <g class="pin" data-id="moclin" data-manage="1" tabindex="0" role="button" aria-label="Moclín y Malalmuerzo">
+          <circle class="halo" cx="336.3" cy="161.9" r="13"></circle>
+          <circle class="dot" cx="336.3" cy="161.9" r="5"></circle>
+          <text class="lbl" x="329" y="158" text-anchor="end">Moclín</text>
+        </g>
+        <g class="pin" data-id="letreros" tabindex="0" role="button" aria-label="Cueva de los Letreros, Vélez-Blanco">
+          <circle class="halo" cx="485.5" cy="124.8" r="13"></circle>
+          <circle class="dot" cx="485.5" cy="124.8" r="5"></circle>
+          <text class="lbl" x="485" y="115" text-anchor="middle">Los Letreros</text>
+        </g>
+        <g class="pin" data-id="pileta" tabindex="0" role="button" aria-label="Cueva de la Pileta, Benaoján">
+          <circle class="halo" cx="205.5" cy="234.1" r="13"></circle>
+          <circle class="dot" cx="205.5" cy="234.1" r="5"></circle>
+          <text class="lbl" x="205" y="248" text-anchor="middle">La Pileta</text>
+        </g>
+        <g class="pin" data-id="aldeaquemada" data-manage="1" tabindex="0" role="button" aria-label="Aldeaquemada y Despeñaperros">
+          <circle class="halo" cx="374.5" cy="43.9" r="13"></circle>
+          <circle class="dot" cx="374.5" cy="43.9" r="5"></circle>
+          <text class="lbl" x="383" y="47">Aldeaquemada</text>
+        </g>
+        <g class="pin" data-id="lajaalta" data-manage="1" tabindex="0" role="button" aria-label="Laja Alta, Jimena de la Frontera">
+          <circle class="halo" cx="185.2" cy="262.7" r="13"></circle>
+          <circle class="dot" cx="185.2" cy="262.7" r="5"></circle>
+          <text class="lbl" x="177" y="266" text-anchor="end">Laja Alta</text>
+        </g>
+        <g class="pin" data-id="bacinete" data-manage="1" tabindex="0" role="button" aria-label="Bacinete, Los Barrios">
+          <circle class="halo" cx="180.8" cy="296.4" r="13"></circle>
+          <circle class="dot" cx="180.8" cy="296.4" r="5"></circle>
+          <text class="lbl" x="173" y="300" text-anchor="end">Bacinete</text>
+        </g>
+        <g class="pin" data-id="soto" tabindex="0" role="button" aria-label="Dolmen de Soto, Trigueros">
+          <circle class="halo" cx="74.9" cy="160.7" r="13"></circle>
+          <circle class="dot" cx="74.9" cy="160.7" r="5"></circle>
+          <text class="lbl" x="83" y="147">Dolmen de Soto</text>
+        </g>
+      </svg>
+    </div>
+    <p class="maplegend">
+      <span><i class="i-origin"></i> Granada</span>
+      <span><i class="i-open"></i> Abierta con reserva</span>
+      <span><i class="i-manage"></i> Requiere gestión</span>
+      <span><i class="i-done"></i> Ya visitada</span>
+      <span><i class="i-nokid"></i> Con edad mínima</span>
+    </p>
+  </section>
+
+  <section>
+    <h2>Las once, de más cerca a más lejos</h2>
+    <p class="sec-note">Distancias aproximadas por carretera desde Granada. Marca la casilla cuando
+      volváis de cada una: se guarda en este dispositivo y podéis pasaros el progreso con el botón
+      de arriba.</p>
+    <div class="scroller">
+      <table>
+        <thead>
+          <tr>
+            <th><span aria-label="Visitada">✓</span></th>
+            <th>Sitio</th><th>Desde Granada</th><th>Plan</th><th>Qué ves</th><th>Precio</th><th>Estado</th>
+          </tr>
+        </thead>
+        <tbody id="tbody">
+          <tr data-id="moclin"><td class="check"></td>
+            <td class="site">Moclín · Malalmuerzo</td><td class="num">50 km · 50 min</td><td class="num">media tarde</td>
+            <td>Caballo solutrense + abrigos esquemáticos</td><td class="num">variable</td>
+            <td><span class="chip manage">Puntual</span></td></tr>
+          <tr data-id="zuheros"><td class="check"></td>
+            <td class="site">Cueva de los Murciélagos</td><td class="num">105 km · 1 h 20</td><td class="num">un día</td>
+            <td>Pinturas neolíticas + yacimiento · Zuheros</td><td class="num">8 €</td>
+            <td><span class="chip open">Abierta</span></td></tr>
+          <tr data-id="graja"><td class="check"></td>
+            <td class="site">Cueva de la Graja</td><td class="num">105 km · 1 h 25</td><td class="num">un día</td>
+            <td>Esquemático «escuela andaluza» · Jimena, Jaén</td><td class="num">gratis</td>
+            <td><span class="chip manage">Llave</span></td></tr>
+          <tr data-id="victoria"><td class="check"></td>
+            <td class="site">Cueva de la Victoria <span class="kid no">Desde 10 años</span></td><td class="num">115 km · 1 h 20</td><td class="num">un día</td>
+            <td>Paleolítico + esquemático · Rincón de la Victoria</td><td class="num">16,50 €</td>
+            <td><span class="chip open">Abierta</span></td></tr>
+          <tr data-id="ardales"><td class="check"></td>
+            <td class="site">Cueva de Ardales <span class="kid no">Desde 8 años</span></td><td class="num">150 km · 1 h 45</td><td class="num">día largo</td>
+            <td>Manos en negativo, +1.000 motivos</td><td class="num">15 €</td>
+            <td><span class="chip open">Abierta</span></td></tr>
+          <tr data-id="letreros"><td class="check"></td>
+            <td class="site">Cueva de los Letreros</td><td class="num">175 km · 2 h</td><td class="num">dormir fuera</td>
+            <td>Arte levantino · el Indalo · UNESCO</td><td class="num">bajo</td>
+            <td><span class="chip open">Abierta</span></td></tr>
+          <tr data-id="pileta"><td class="check"></td>
+            <td class="site">Cueva de la Pileta</td><td class="num">205 km · 2 h 30</td><td class="num">día muy largo</td>
+            <td>Paleolítico completo, sin luz eléctrica · Benaoján</td><td class="num">15 €</td>
+            <td><span class="chip open">Abierta</span></td></tr>
+          <tr data-id="aldeaquemada"><td class="check"></td>
+            <td class="site">Aldeaquemada</td><td class="num">210 km · 2 h 20</td><td class="num">dormir fuera</td>
+            <td>19 conjuntos levantinos · UNESCO · Jaén</td><td class="num">s/guía</td>
+            <td><span class="chip manage">Gestión</span></td></tr>
+          <tr data-id="lajaalta"><td class="check"></td>
+            <td class="site">Laja Alta</td><td class="num">265 km · 3 h</td><td class="num">dormir fuera</td>
+            <td>Los barcos más antiguos del Mediterráneo occ.</td><td class="num">15–25 €</td>
+            <td><span class="chip manage">Gestión</span></td></tr>
+          <tr data-id="bacinete"><td class="check"></td>
+            <td class="site">Bacinete</td><td class="num">280 km · 3 h</td><td class="num">dormir fuera</td>
+            <td>9 abrigos de «Arte Sureño» · Los Barrios</td><td class="num">s/ruta</td>
+            <td><span class="chip manage">Gestión</span></td></tr>
+          <tr data-id="soto"><td class="check"></td>
+            <td class="site">Dolmen de Soto</td><td class="num">335 km · 3 h 20</td><td class="num">dormir fuera</td>
+            <td>Grabados megalíticos, los más abundantes · Huelva</td><td class="num">0–2 €</td>
+            <td><span class="chip open">Abierta</span></td></tr>
+          <tr class="dim"><td class="check"></td>
+            <td class="site">Cueva de Nerja</td><td class="num">85 km · 1 h 10</td><td class="num">—</td>
+            <td>El arte no se visita — recreaciones en museo y VR</td><td class="num">—</td>
+            <td><span class="chip shut">Arte cerrado</span></td></tr>
+          <tr class="dim"><td class="check"></td>
+            <td class="site">Tajo de las Figuras</td><td class="num">300 km · 3 h 20</td><td class="num">—</td>
+            <td>+500 figuras · el mejor conjunto del sur</td><td class="num">—</td>
+            <td><span class="chip shut">Cerrada</span></td></tr>
+          <tr class="dim"><td class="check"></td>
+            <td class="site">Cueva de Ambrosio</td><td class="num">180 km · 2 h</td><td class="num">—</td>
+            <td>Solutrense, caballo grabado</td><td class="num">—</td>
+            <td><span class="chip shut">Solo entorno</span></td></tr>
+          <tr class="dim"><td class="check"></td>
+            <td class="site">Cueva del Moro</td><td class="num">290 km · 3 h 10</td><td class="num">—</td>
+            <td>Caballos grabados, 20.000 años · Tarifa</td><td class="num">—</td>
+            <td><span class="chip shut">Escalada</span></td></tr>
+          <tr class="dim"><td class="check"></td>
+            <td class="site">Cueva del Gato</td><td class="num">200 km · 2 h 30</td><td class="num">—</td>
+            <td>Monumento Natural precioso, pero sin arte visitable</td><td class="num">—</td>
+            <td><span class="chip shut">Espeleología</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Fichas</h2>
+    <p class="sec-note">En el mismo orden: de más cerca de Granada a más lejos.</p>
+
+    <div class="cards" id="cards">
+
+      <article class="card" data-id="moclin" id="c-moclin">
+        <div class="card-head">
+          <h3>Moclín y Malalmuerzo</h3>
+          <span class="place">Granada</span>
+          <span class="chip manage">Puntual</span>
+        </div>
+        <div class="fromhome">
+          <span><b>50 km</b> · 50 min</span><span class="trip">Media tarde, sin salir de la provincia</span></div>
+        <div class="card-body">
+          <p class="lede">La de casa. Malalmuerzo guarda una figura roja de équido
+            <strong>solutrense</strong> — arte paleolítico en el interior de Granada, que es rareza.
+            Alrededor, una docena de abrigos esquemáticos neolíticos: La Corcuela, Cuevas de las
+            Vereas, Cueva de la Araña, Hornillo de la Solana, Limones.</p>
+          <dl class="specs">
+            <dt>Visitas</dt><dd>Guiadas puntuales (cueva + necrópolis mozárabe de Tozar). Abre por convocatoria, no en calendario fijo</dd>
+            <dt>Por libre</dt><dd>La Corcuela es accesible desde la zona recreativa, en coche por pista o a pie</dd>
+            <dt>Contexto</dt><dd>Centro de Interpretación Comarcal de Moclín</dd>
+          </dl>
+          <div class="verdict">
+            <h4>Por qué empezar aquí</h4>
+            <p>Está a tiro de piedra y sirve de <strong>ensayo</strong>: veis si el plan os engancha
+              antes de meteros tres horas de coche. Y el castillo de Moclín con las vistas de la
+              vega compensa aunque ese día no haya visita guiada.</p>
+          </div>
+        </div>
+        <div class="cardfoot"><a class="btn" href="https://www.google.com/maps/dir/?api=1&amp;origin=Granada%2C+Espa%C3%B1a&amp;destination=Centro+de+Interpretaci%C3%B3n+Comarcal%2C+Mocl%C3%ADn">Ruta desde Granada</a><a class="btn" href="https://portal.dipgra.es/es/pois/cueva-de-malalmuerzos">Web oficial</a></div>
+      </article>
+
+      <article class="card" data-id="zuheros" id="c-zuheros">
+        <div class="card-head">
+          <h3>Cueva de los Murciélagos</h3>
+          <span class="place">Zuheros · Córdoba</span>
+          <span class="chip open">Abierta</span>
+        </div>
+        <div class="fromhome">
+          <span><b>105 km</b> · 1 h 20</span><span class="trip">Ida y vuelta en el día, cómoda</span></div>
+        <div class="card-body">
+          <p class="lede">La primera que deberíais hacer. Pinturas neolíticas y calcolíticas en el
+            santuario interior, un yacimiento neolítico de referencia internacional, formaciones
+            espectaculares — y arriba, uno de los pueblos más bonitos de la Subbética con su
+            castillo. Es la cueva más grande de Córdoba.</p>
+          <dl class="specs">
+            <dt>Precio</dt><dd class="price">8 € (13+) · 6,50 € (6–12) · ~11 € combinada con el castillo</dd>
+            <dt>Duración</dt><dd>50–60 min · 415 m de recorrido hasta −65 m</dd>
+            <dt>Esfuerzo</dt><dd><strong>700 escalones</strong> — 350 de bajada y 350 de subida</dd>
+            <dt>Horarios</dt><dd>Abr–sep 11:00 / 12:30 / 17:30 · oct–mar 11:00 / 12:30 / 16:30 · cerrado lunes y martes</dd>
+            <dt>Reserva</dt><dd>Obligatoria mié–vie · <a href="tel:+34957694545">957 69 45 45</a> · turismo@zuheros.es (mié–dom 10:00–13:30)</dd>
+            <dt>Dentro</dt><dd>10 °C · manga larga aunque fuera haya 30</dd>
+          </dl>
+          <div class="verdict">
+            <h4>Qué dice quien ha ido</h4>
+            <p>4,5 sobre 5 con más de 1.500 valoraciones. Elogios a las guías y a las vistas del
+              acceso.</p>
+            <p><strong>El aviso que más se repite y que va en serio: los 700 escalones existen.</strong>
+              Llegar 15–25 min antes o se pierde la plaza; las entradas no se devuelven.</p>
+          </div>
+        </div>
+        <div class="cardfoot"><a class="btn" href="https://www.google.com/maps/dir/?api=1&amp;origin=Granada%2C+Espa%C3%B1a&amp;destination=Cueva+de+los+Murci%C3%A9lagos%2C+Zuheros">Ruta desde Granada</a><a class="btn" href="https://turismozuheros.es/cueva-de-los-murcielagos/">Web oficial</a><a class="btn primary" href="https://zuheros.es/reservas-de-la-cueva-de-los-murcielagos/">Reservar</a><a class="btn" href="tel:+34957694545">Llamar</a></div>
+      </article>
+
+      <article class="card" data-id="graja" id="c-graja">
+        <div class="card-head">
+          <h3>Cueva de la Graja</h3>
+          <span class="place">Jimena · Jaén</span>
+          <span class="chip manage">Llave</span>
+        </div>
+        <div class="fromhome">
+          <span><b>105 km</b> · 1 h 25</span><span class="trip">Ida y vuelta en el día · combínala con Úbeda o Baeza</span></div>
+        <div class="card-body">
+          <p class="lede">Uno de los mejores ejemplos de arte esquemático de Andalucía — tanto que
+            dio nombre a la «escuela andaluza» —, Monumento Nacional desde 1924. Escenas rituales y
+            de pastoreo pintadas con óxido de hierro, arcillas y grasa animal.</p>
+          <dl class="specs">
+            <dt>Precio</dt><dd class="price">Gratis</dd>
+            <dt>Acceso</dt><dd>Se pide la llave en el Ayuntamiento o en la casa junto a la Ermita de la Virgen de Cánava · sendero desde el campo de fútbol municipal</dd>
+          </dl>
+          <div class="verdict">
+            <h4>Consejo de planificación</h4>
+            <p>Como es «con llave» y sin horario, es <strong>la más fácil de encajar</strong> en un
+              día que ya tuvierais pensado por Jaén. Llama antes para asegurarte de que hay alguien
+              que te la dé.</p>
+          </div>
+        </div>
+        <div class="cardfoot"><a class="btn" href="https://www.google.com/maps/dir/?api=1&amp;origin=Granada%2C+Espa%C3%B1a&amp;destination=Cueva+de+la+Graja%2C+Jimena%2C+Ja%C3%A9n">Ruta desde Granada</a><a class="btn" href="https://jimenaturismo.grupofortalezas.com/la-cueva-de-la-graja">Web oficial</a></div>
+      </article>
+
+      <article class="card" data-id="victoria" id="c-victoria">
+        <div class="card-head">
+          <h3>Cueva de la Victoria</h3>
+          <span class="place">Rincón de la Victoria · Málaga</span>
+          <span class="chip open">Abierta</span>
+        </div>
+        <div class="fromhome">
+          <span><b>115 km</b> · 1 h 20</span><span class="trip">Ida y vuelta en el día · y hay playa</span><span class="kid no">No admite menores de 10 años</span></div>
+        <div class="card-body">
+          <p class="lede">Abierta al público solo desde febrero de 2022, con doble colección: arte
+            paleolítico hasta el magdaleniense y arte esquemático neolítico. Treinta mil años de
+            secuencia en un mismo sitio. Está en la Ruta Europea del Arte Rupestre Prehistórico del
+            Consejo de Europa, y es la más aventura de la lista.</p>
+          <dl class="specs">
+            <dt>Precio</dt><dd class="price">16,50 € · −2,75 € residentes y niños de 10 a 12</dd>
+            <dt>Turnos</dt><dd>Jueves a lunes, 10:00 y 12:30 · grupos de 10</dd>
+            <dt>Reserva</dt><dd>Obligatoria · oficina de turismo de Rincón o turismoenrincon.es</dd>
+            <dt>Restricciones</dt><dd>A partir de 10 años · solo sin problemas de movilidad</dd>
+            <dt>Combina con</dt><dd>Cueva del Tesoro, justo al lado, y comer en el paseo marítimo</dd>
+          </dl>
+          <div class="verdict">
+            <h4>El plan redondo</h4>
+            <p>Turno de las 10:00, salís de Granada a las 8:00, y la tarde os queda libre en la
+              costa. <strong>Es la que mejor funciona como día completo de pareja</strong>: cueva
+              por la mañana, mar por la tarde.</p>
+          </div>
+        </div>
+        <div class="cardfoot"><a class="btn" href="https://www.google.com/maps/dir/?api=1&amp;origin=Granada%2C+Espa%C3%B1a&amp;destination=Cueva+del+Tesoro%2C+Rinc%C3%B3n+de+la+Victoria">Ruta desde Granada</a><a class="btn" href="https://www.turismoenrincon.es/noticias/guia-para-visitar-la-cueva-de-la-victoria-en-rincon-de-la-victoria">Web oficial</a><a class="btn primary" href="https://www.giglon.com/todos?idEvent=visita-la-cueva-prehistorica-de-la-victoria">Comprar entrada</a></div>
+      </article>
+
+      <article class="card" data-id="ardales" id="c-ardales">
+        <div class="card-head">
+          <h3>Cueva de Ardales</h3>
+          <span class="place">Ardales · Málaga · Doña Trinidad Grund</span>
+          <span class="chip open">Abierta</span>
+        </div>
+        <div class="fromhome">
+          <span><b>150 km</b> · 1 h 45</span><span class="trip">Día largo · o noche fuera y encadenar con la Pileta</span><span class="kid no">No admite menores de 8 años</span></div>
+        <div class="card-body">
+          <p class="lede">Probablemente el arte más antiguo al que podéis acercaros en toda
+            Andalucía: marcas rojas de más de <strong>45.000 años</strong> —anteriores a la llegada
+            del <em>Homo sapiens</em> a la zona, atribuidas a neandertales—, manos aerografiadas de
+            más de 35.000 y figuras femeninas de 25.000. Más de mil representaciones catalogadas.
+            Una de las mejores colecciones de arte paleolítico de Europa, y casi nadie lo sabe.</p>
+          <dl class="specs">
+            <dt>Precio</dt><dd class="price">15 € desde 12 años · 5 € de 8 a 12 <span style="color:var(--faint)">(confirmar al reservar)</span></dd>
+            <dt>Duración</dt><dd>2 h en la cueva · 3 h con el Centro de la Prehistoria</dd>
+            <dt>Aforo</dt><dd><strong>15 personas al día.</strong> Este es el cuello de botella real</dd>
+            <dt>Horarios</dt><dd>Martes a domingo 10:00 · viernes y sábado también 16:00 · lunes cerrado</dd>
+            <dt>Reserva</dt><dd><a href="tel:+34952458046">952 45 80 46</a> (mar–dom 8:30–14:30) · patrimonio@ardales.es</dd>
+            <dt>Encuentro</dt><dd>Centro de la Prehistoria, Av. de Málaga 1 · se sube en coche propio a la boca</dd>
+            <dt>Restricciones</dt><dd>No apta &lt;8 ni &gt;70 años, embarazadas o movilidad reducida</dd>
+          </dl>
+          <div class="verdict">
+            <h4>Qué dice quien ha ido</h4>
+            <p>El elogio constante es el contraste con las cuevas comerciales: grupos diminutos,
+              guía que sabe de lo que habla, sensación de acceso privilegiado.</p>
+            <p><strong>Nadie se queja del precio. Se quejan de no encontrar hueco.</strong> Con
+              quince plazas al día, esta es la llamada que hay que hacer primero de todas.</p>
+          </div>
+        </div>
+        <div class="cardfoot"><a class="btn" href="https://www.google.com/maps/dir/?api=1&amp;origin=Granada%2C+Espa%C3%B1a&amp;destination=Centro+de+la+Prehistoria+de+Ardales">Ruta desde Granada</a><a class="btn" href="https://www.ardales.es/5518/cueva-prehistorica-de-ardales">Web oficial</a><a class="btn primary" href="https://www.giglon.com/todos?idEvent=visitas-guiadas-a-la-cueva-de-ardales-malaga">Comprar entrada</a><a class="btn" href="tel:+34952458046">Llamar</a></div>
+      </article>
+
+      <article class="card" data-id="letreros" id="c-letreros">
+        <div class="card-head">
+          <h3>Cueva de los Letreros</h3>
+          <span class="place">Vélez-Blanco · Almería</span>
+          <span class="chip open">Abierta</span>
+        </div>
+        <div class="fromhome">
+          <span><b>175 km</b> · 2 h</span><span class="trip">Mejor dormir fuera: la visita es a las 18:00</span></div>
+        <div class="card-body">
+          <p class="lede">Patrimonio de la Humanidad y hogar del <strong>Indalo</strong>: el
+            antropomorfo con el arco sobre la cabeza que acabó convertido en símbolo de Almería.
+            Arte levantino y esquemático en un entorno de sierra precioso.</p>
+          <dl class="specs">
+            <dt>Precio</dt><dd>Económico, guía incluido · descuentos a grupos, estudiantes y +65</dd>
+            <dt>Duración</dt><dd>1 h 20 con el sendero de acceso (20–30 min, dificultad baja-media)</dd>
+            <dt>Horarios</dt><dd>Miércoles, sábado y domingo 18:00 · <strong>desde octubre, 16:30</strong></dd>
+            <dt>Reserva</dt><dd>Obligatoria · <a href="tel:+34694467136">694 46 71 36</a> · salida del Centro de Visitantes «Almacén del Trigo»</dd>
+            <dt>No se visita</dt><dd>Con lluvia, hielo o nieve · calzado de monte obligatorio</dd>
+            <dt>Fotos</dt><dd>Permitidas sin flash — raro en esta lista</dd>
+          </dl>
+          <div class="verdict warn">
+            <h4>Leed esto antes de ir</h4>
+            <p>Es el sitio con opiniones más divididas de toda la guía. A favor: guías didácticos y
+              un paisaje que justifica el viaje por sí solo.</p>
+            <p><strong>En contra, y se repite: las pinturas se ven desde detrás de una reja</strong>,
+              y el horario de tarde no siempre acompaña a la luz. Hay reseñas tituladas literalmente
+              «decepcionante y agotador». Id con la expectativa calibrada — vais por el Indalo
+              original y por la sierra, no por una experiencia inmersiva.</p>
+          </div>
+        </div>
+        <div class="cardfoot"><a class="btn" href="https://www.google.com/maps/dir/?api=1&amp;origin=Granada%2C+Espa%C3%B1a&amp;destination=Centro+de+Visitantes+Almac%C3%A9n+del+Trigo%2C+V%C3%A9lez-Blanco">Ruta desde Granada</a><a class="btn" href="https://descubrelosvelez.es/como-visitar-la-cueva-de-los-letreros-en-velez-blanco/">Web oficial</a><a class="btn primary" href="tel:+34694467136">Llamar para reservar</a></div>
+      </article>
+
+      <article class="card" data-id="pileta" id="c-pileta">
+        <div class="card-head">
+          <h3>Cueva de la Pileta</h3>
+          <span class="place">Benaoján · Málaga · a 22 km de Ronda</span>
+          <span class="chip open">Abierta</span>
+        </div>
+        <div class="fromhome">
+          <span><b>205 km</b> · 2 h 30</span><span class="trip">Día muy largo · pide noche en Ronda</span></div>
+        <div class="card-body">
+          <p class="lede">La joya, y la que está más lejos de las «fáciles». El conjunto paleolítico
+            más completo abierto en Andalucía: caballos, cabras, peces y series esquemáticas
+            posteriores. Y se recorre <strong>sin luz eléctrica</strong>, con lámparas portátiles —
+            la experiencia es prácticamente la del descubridor. La gestiona la familia Bullón,
+            descendientes de quien la encontró en 1905.</p>
+          <dl class="specs">
+            <dt>Precio</dt><dd class="price">15 € (11+) · 10 € (5–10 años) · gratis &lt;5</dd>
+            <dt>Duración</dt><dd>1 h 20 · aforo de 20 personas</dd>
+            <dt>Horarios</dt><dd>Findes y festivos 11:00 / 12:00 / 13:00 / 16:00 · entre semana 11:30 / 13:00 / 16:00</dd>
+            <dt>Reserva</dt><dd>Obligatoria · <a href="tel:+34677610500">677 610 500</a> (10:00–13:00) · info@cuevadelapileta.com</dd>
+            <dt>Acceso</dt><dd>Escalera natural de ~100 escalones, 5–10 min de subida</dd>
+            <dt>Prohibido</dt><dd>Cámaras <em>y móviles</em>. No apta con movilidad reducida ni problemas cardíacos</dd>
+            <dt>Dentro</dt><dd>15 °C constantes, suelo resbaladizo</dd>
+          </dl>
+          <div class="verdict">
+            <h4>Qué dice quien ha ido</h4>
+            <p>Atracción nº 1 de Benaoján en TripAdvisor. Lo que más se repite: el realismo de las
+              figuras sorprende, y la visita con lámpara, sin puesta en escena turística, es lo que
+              la hace memorable.</p>
+            <p><strong>Las quejas son casi siempre la misma:</strong> gente que no reservó y se quedó
+              fuera. Hay que estar 15 minutos antes <em>en la puerta de la cueva</em>, no en el
+              aparcamiento.</p>
+          </div>
+          <div class="verdict warn">
+            <h4>Aviso de pareja</h4>
+            <p>Prohibidos los móviles dentro. Nada de fotos: <strong>de esta visita os lleváis solo
+              el recuerdo</strong>. Que uno de los dos lo asuma antes de entrar.</p>
+          </div>
+        </div>
+        <div class="cardfoot"><a class="btn" href="https://www.google.com/maps/dir/?api=1&amp;origin=Granada%2C+Espa%C3%B1a&amp;destination=Cueva+de+la+Pileta%2C+Benaoj%C3%A1n">Ruta desde Granada</a><a class="btn" href="https://cuevadelapileta.com/">Web oficial</a><a class="btn primary" href="https://cuevadelapileta.com/visita">Reservar</a><a class="btn" href="tel:+34677610500">Llamar</a></div>
+      </article>
+
+      <article class="card" data-id="aldeaquemada" id="c-aldeaquemada">
+        <div class="card-head">
+          <h3>Aldeaquemada y Despeñaperros</h3>
+          <span class="place">Jaén</span>
+          <span class="chip manage">Gestión</span>
+        </div>
+        <div class="fromhome">
+          <span><b>210 km</b> · 2 h 20</span><span class="trip">Dormir fuera · base en Santa Elena o La Carolina</span></div>
+        <div class="card-body">
+          <p class="lede">Patrimonio de la Humanidad. <strong>Diecinueve conjuntos</strong> solo en
+            el término de Aldeaquemada: Prado del Azogue, Tabla del Pochico, Cueva de los Arcos,
+            Barranco de la Cueva. Al lado, en Santa Elena, las Vacas del Retamoso y Los Brujos.</p>
+          <dl class="specs">
+            <dt>Cómo va</dt><dd>Sales del Centro de Interpretación Pablo de Olavide siguiendo al guía en tu coche por pista forestal, luego se camina · 2 h 30</dd>
+            <dt>Reserva</dt><dd><a href="tel:+34680104199">680 10 41 99</a> · mínimo 48 h de antelación</dd>
+            <dt>Guía local</dt><dd>Ángel «el Fide» · <a href="tel:+34636006190">636 00 61 90</a></dd>
+          </dl>
+          <div class="verdict warn">
+            <h4>Aviso</h4>
+            <p>Sin guía no encontráis las pinturas. <strong>No hay señalización y los paneles son
+              difíciles de ver a simple vista</strong> — ir por libre aquí es perder el día.</p>
+          </div>
+        </div>
+        <div class="cardfoot"><a class="btn" href="https://www.google.com/maps/dir/?api=1&amp;origin=Granada%2C+Espa%C3%B1a&amp;destination=Centro+de+Interpretaci%C3%B3n+Pablo+de+Olavide%2C+Aldeaquemada">Ruta desde Granada</a><a class="btn" href="https://www.aldeaquemada.com/historia/arterupestre/index.html">Web oficial</a><a class="btn primary" href="tel:+34680104199">Llamar para reservar</a></div>
+      </article>
+
+      <article class="card" data-id="lajaalta" id="c-lajaalta">
+        <div class="card-head">
+          <h3>Laja Alta</h3>
+          <span class="place">Jimena de la Frontera · Cádiz</span>
+          <span class="chip manage">Gestión</span>
+        </div>
+        <div class="fromhome">
+          <span><b>265 km</b> · 3 h</span><span class="trip">Dormir fuera · encadénala con Bacinete</span></div>
+        <div class="card-body">
+          <p class="lede">El abrigo con las <strong>representaciones de embarcaciones más antiguas
+            del Mediterráneo occidental</strong> — la Universidad de Granada las sitúa en el IV–III
+            milenio a.C. Velas, remos y arboladuras dibujadas con detalle. Es un sitio de primer
+            nivel mundial que casi nadie visita.</p>
+          <dl class="specs">
+            <dt>Precio</dt><dd class="price">15–25 € según modalidad (con o sin 4×4 y comida)</dd>
+            <dt>Reserva</dt><dd>Ayuntamiento de Jimena <a href="tel:+34956640254">956 64 02 54</a> · o la empresa Arqueoroutes</dd>
+            <dt>Encuentro</dt><dd>Lo fija la empresa — recogen incluso en el alojamiento</dd>
+          </dl>
+        </div>
+        <div class="cardfoot"><a class="btn" href="https://www.google.com/maps/dir/?api=1&amp;origin=Granada%2C+Espa%C3%B1a&amp;destination=Jimena+de+la+Frontera%2C+C%C3%A1diz">Ruta desde Granada</a><a class="btn" href="https://www.jimenadelafrontera.es/abrigo-rupestre-de-la-laja-alta">Web oficial</a><a class="btn primary" href="tel:+34956640254">Llamar para reservar</a></div>
+      </article>
+
+      <article class="card" data-id="bacinete" id="c-bacinete">
+        <div class="card-head">
+          <h3>Bacinete</h3>
+          <span class="place">Los Barrios · Cádiz</span>
+          <span class="chip manage">Gestión</span>
+        </div>
+        <div class="fromhome">
+          <span><b>280 km</b> · 3 h</span><span class="trip">Dormir fuera · el mismo finde que Laja Alta</span></div>
+        <div class="card-body">
+          <p class="lede">Nueve abrigos con el conjunto más bello del llamado «Arte Sureño»
+            esquemático, más una necrópolis de tumbas antropomorfas excavadas en la arenisca. Todo
+            dentro del Parque Natural de Los Alcornocales.</p>
+          <dl class="specs">
+            <dt>Acceso</dt><dd>Coordinado por la Delegación de Turismo · <a href="tel:+34956628013">956 62 80 13</a></dd>
+            <dt>Esfuerzo</dt><dd>Ruta senderista de ~4 km, poco más de 1 h</dd>
+          </dl>
+        </div>
+        <div class="cardfoot"><a class="btn" href="https://www.google.com/maps/dir/?api=1&amp;origin=Granada%2C+Espa%C3%B1a&amp;destination=Cuevas+de+Bacinete%2C+Los+Barrios%2C+C%C3%A1diz">Ruta desde Granada</a><a class="btn" href="http://www.turismocampodegibraltar.com/los_barrios/que-visitar/Ruta-Arte-Rupestre-en-Los-Barrios/">Web oficial</a><a class="btn primary" href="tel:+34956628013">Llamar para reservar</a></div>
+      </article>
+
+      <article class="card" data-id="soto" id="c-soto">
+        <div class="card-head">
+          <h3>Dolmen de Soto</h3>
+          <span class="place">Trigueros · Huelva</span>
+          <span class="chip open">Abierta</span>
+        </div>
+        <div class="fromhome">
+          <span><b>335 km</b> · 3 h 20</span><span class="trip">La más lejana · dormir fuera, con el Condado al lado</span></div>
+        <div class="card-body">
+          <p class="lede">No es cueva, es megalitismo — pero tiene <strong>más grabados que ningún
+            otro dolmen de la Península</strong>: antropomorfos, armas, ídolos, geométricos. Un
+            corredor de más de 20 metros bajo un túmulo de 70 de diámetro, orientado para que en los
+            equinoccios el sol lo recorra entero.</p>
+          <dl class="specs">
+            <dt>Precio</dt><dd class="price">Visita libre gratuita · guiada 2 € · máx. 10 personas</dd>
+            <dt>Horarios</dt><dd>Mar–dom 10:30–13:30 · jue–dom 18:30–20:30 hasta el 15 sep, luego 16:00–18:00</dd>
+            <dt>Reserva</dt><dd>Obligatoria · <a href="tel:+34627940357">627 94 03 57</a> (WhatsApp) · <a href="tel:+34959305075">959 30 50 75</a> ext. 5</dd>
+          </dl>
+          <div class="verdict">
+            <h4>Consejo</h4>
+            <p>Pagad los 2 € de la guiada. <strong>Todas las reseñas que destacan la visita son de
+              gente que la hizo guiada</strong>; las decepcionadas, de quien entró por libre.</p>
+          </div>
+        </div>
+        <div class="cardfoot"><a class="btn" href="https://www.google.com/maps/dir/?api=1&amp;origin=Granada%2C+Espa%C3%B1a&amp;destination=Dolmen+de+Soto%2C+Trigueros%2C+Huelva">Ruta desde Granada</a><a class="btn" href="https://www.trigueros.es/es/turismo/dolmen-de-soto/">Web oficial</a><a class="btn primary" href="tel:+34627940357">Reservar por WhatsApp</a></div>
+      </article>
+
+    </div>
+  </section>
+
+  <section>
+    <h2>Lo que no vais a ver</h2>
+    <p class="sec-note">Sale en todas las listas de internet. No perdáis el viaje.</p>
+    <div class="out">
+      <div>
+        <h4>Cueva de Nerja · a 85 km de Granada</h4>
+        <p>321 grupos pictóricos catalogados, algunos de 24.000 años… y ninguno visitable, por
+          conservación. Lo que sí veréis: recreaciones en el Museo de Nerja y en la sala de realidad
+          virtual, ambas incluidas en la entrada. La cueva merece la visita por sí misma; el arte no
+          es la razón.</p>
+      </div>
+      <div>
+        <h4>Tajo de las Figuras · Benalup, Cádiz</h4>
+        <p>El conjunto esquemático más importante del sur —más de 500 figuras, con esas aves únicas
+          de la antigua Laguna de la Janda— lleva años cerrado: calcita depositada sobre las
+          pinturas por la vieja práctica de mojar las paredes, más deterioro de las instalaciones.
+          Si algún día reabre, es la número uno de esta guía. Merece una llamada anual al
+          ayuntamiento.</p>
+      </div>
+      <div>
+        <h4>Cueva del Gato · Benaoján-Montejaque, Málaga</h4>
+        <p>La otra gran cueva de la Serranía de Ronda, Monumento Natural y postal preciosa desde
+          fuera. No tiene arte visitable: forma parte del sistema Hundidero-Gato y solo se atraviesa
+          con espeleólogos. Si vais a la Pileta, parad en el mirador y seguid.</p>
+      </div>
+      <div>
+        <h4>Cueva de Ambrosio · Vélez-Blanco, Almería</h4>
+        <p>Monumento Natural con una secuencia solutrense excepcional y un caballo grabado
+          magnífico. El entorno se visita; el arte parietal, no. Está a diez minutos de los
+          Letreros, así que la veréis señalizada: no os desviéis esperando pinturas.</p>
+      </div>
+      <div>
+        <h4>Cueva del Moro · Tarifa, Cádiz</h4>
+        <p>El santuario paleolítico más meridional de Europa, con caballos grabados de 20.000 años.
+          Está a 40 metros de altura en una laja de arenisca: requiere escalada. No es visita
+          turística.</p>
+      </div>
+      <div>
+        <h4>Los Covachos · Almadén de la Plata, Sevilla</h4>
+        <p>Primer arte rupestre documentado de la provincia de Sevilla, 182 puntos con motivos.
+          Cerrado: alberga una colonia de murciélagos autóctonos y el acceso solo se autoriza con
+          permiso ambiental.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Ocho salidas, de la más corta a la más larga</h2>
+    <p class="sec-note">Todas cuentan ida y vuelta desde Granada. Las cuatro primeras caben en un
+      día; las cuatro últimas piden noche fuera.</p>
+    <div class="routes">
+
+      <div class="route">
+        <div class="route-head">
+          <h3>Moclín</h3>
+          <span class="tag">Media tarde · para estrenar</span>
+        </div>
+        <p class="dist"><b>50 km</b> · 50 min · 1 h 40 de coche en total</p>
+        <ul class="days">
+          <li><span class="d">Tarde</span><span>Centro de Interpretación → abrigos de La Corcuela → castillo de Moclín al atardecer</span></li>
+        </ul>
+        <p class="why">Un domingo cualquiera. Sirve para ver si el plan os engancha antes de meteros
+          viajes largos.</p>
+      </div>
+
+      <div class="route">
+        <div class="route-head">
+          <h3>Subbética cordobesa</h3>
+          <span class="tag">Un día · la más fácil de todas</span>
+        </div>
+        <p class="dist"><b>105 km</b> · 1 h 20 · 2 h 40 de coche en total</p>
+        <ul class="days">
+          <li><span class="d">Mañana</span><span>Cueva de los Murciélagos en <strong>Zuheros</strong>, 11:00 o 12:30 → castillo con entrada combinada</span></li>
+          <li><span class="d">Tarde</span><span>Almuerzo en el pueblo → Doña Mencía o Priego de Córdoba</span></li>
+        </ul>
+        <p class="why">Por cercanía, precio y facilidad de reserva, esta es por la que hay que
+          empezar de verdad.</p>
+      </div>
+
+      <div class="route">
+        <div class="route-head">
+          <h3>Rincón de la Victoria</h3>
+          <span class="kid no">No admite menores de 10 años</span>
+          <span class="tag">Un día · cueva y mar</span>
+        </div>
+        <p class="dist"><b>115 km</b> · 1 h 20 · 2 h 40 de coche en total</p>
+        <ul class="days">
+          <li><span class="d">Mañana</span><span>Turno de las 10:00 en la <strong>Cueva de la Victoria</strong> → Cueva del Tesoro al lado</span></li>
+          <li><span class="d">Tarde</span><span>Comida en el paseo marítimo y playa</span></li>
+        </ul>
+        <p class="why">La que mejor funciona como día completo de pareja: prehistoria por la mañana,
+          nada que hacer por la tarde.</p>
+      </div>
+
+      <div class="route">
+        <div class="route-head">
+          <h3>La Graja y el Renacimiento</h3>
+          <span class="tag">Un día · Jaén</span>
+        </div>
+        <p class="dist"><b>105 km</b> · 1 h 25 · 3 h de coche en total</p>
+        <ul class="days">
+          <li><span class="d">Mañana</span><span>Llave en Jimena → sendero a la <strong>Cueva de la Graja</strong></span></li>
+          <li><span class="d">Tarde</span><span>Úbeda o Baeza</span></li>
+        </ul>
+        <p class="why">Gratis y sin horarios. Solo hay que asegurarse por teléfono de que hay alguien
+          para darte la llave.</p>
+      </div>
+
+      <div class="route">
+        <div class="route-head">
+          <h3>Ardales y la Pileta</h3>
+          <span class="kid no">Ardales no admite menores de 8 años</span>
+          <span class="tag">Fin de semana · la mejor del año</span>
+        </div>
+        <p class="dist"><b>150 y 205 km</b> · noche en Ronda o El Chorro · ~6 h de coche en total</p>
+        <ul class="days">
+          <li><span class="d">Sábado</span><span>Cueva de <strong>Ardales</strong> a las 10:00 (2–3 h) → comida en el pueblo → El Chorro o Caminito del Rey</span></li>
+          <li><span class="d">Domingo</span><span>Cueva de <strong>la Pileta</strong> al mediodía → Ronda por la tarde, o Acinipo y el Dolmen de la Giganta</span></li>
+        </ul>
+        <p class="why">El fin de semana con más arte paleolítico por kilómetro de toda España.
+          Reservad Ardales con tres o cuatro semanas: quince plazas al día.</p>
+      </div>
+
+      <div class="route">
+        <div class="route-head">
+          <h3>Los Vélez</h3>
+          <span class="tag">Fin de semana · Almería</span>
+        </div>
+        <p class="dist"><b>175 km</b> · 2 h · noche en Vélez-Blanco o Vélez-Rubio</p>
+        <ul class="days">
+          <li><span class="d">Sábado</span><span><strong>Cueva de los Letreros</strong> a las 18:00 — 16:30 desde octubre → cena en el pueblo</span></li>
+          <li><span class="d">Domingo</span><span>Castillo de Vélez-Blanco → Parque Natural Sierra de María</span></li>
+        </ul>
+        <p class="why">La visita de tarde obliga a dormir allí, y el castillo lo compensa. Expectativa
+          calibrada con la reja.</p>
+      </div>
+
+      <div class="route">
+        <div class="route-head">
+          <h3>Sierra Morena</h3>
+          <span class="tag">Fin de semana · Jaén norte</span>
+        </div>
+        <p class="dist"><b>210 km</b> · 2 h 20 · base en Santa Elena o La Carolina</p>
+        <ul class="days">
+          <li><span class="d">Sábado</span><span><strong>Aldeaquemada</strong> — Prado del Azogue con guía, 2 h 30 por la mañana</span></li>
+          <li><span class="d">Domingo</span><span><strong>Despeñaperros / Santa Elena</strong> — Vacas del Retamoso y Los Brujos</span></li>
+        </ul>
+        <p class="why">De vuelta podéis desviaros a la Cueva de la Graja y cerrar dos de golpe.
+          Reserva con 48 h mínimo.</p>
+      </div>
+
+      <div class="route">
+        <div class="route-head">
+          <h3>Campo de Gibraltar</h3>
+          <span class="tag">Fin de semana largo · la más exclusiva</span>
+        </div>
+        <p class="dist"><b>265 y 280 km</b> · 3 h · noche en Jimena o Los Barrios</p>
+        <ul class="days">
+          <li><span class="d">Sábado</span><span><strong>Bacinete</strong> (Los Barrios) por la mañana, ruta de 4 km</span></li>
+          <li><span class="d">Domingo</span><span><strong>Laja Alta</strong> (Jimena de la Frontera), media jornada con guía</span></li>
+        </ul>
+        <p class="why">Las dos exigen llamada previa: hacedlas el mismo día y cuadráis el finde de
+          una vez. Los barcos de Laja Alta son de lo más singular que vais a ver.</p>
+      </div>
+
+      <div class="route">
+        <div class="route-head">
+          <h3>Huelva</h3>
+          <span class="tag">Fin de semana · la más lejana</span>
+        </div>
+        <p class="dist"><b>335 km</b> · 3 h 20 · noche en el Condado o Huelva</p>
+        <ul class="days">
+          <li><span class="d">Sábado</span><span><strong>Dolmen de Soto</strong> (Trigueros) con visita guiada → Niebla</span></li>
+          <li><span class="d">Domingo</span><span>El Rocío, Doñana o las playas del Condado</span></li>
+        </ul>
+        <p class="why">A esta distancia el dolmen no justifica el viaje solo: encájalo dentro de un
+          finde de Huelva.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2>Ocho avisos para septiembre</h2>
+    <hr class="rule">
+    <ul class="notes">
+      <li><span class="marker">01</span><span>La <strong>primera quincena todavía aprieta</strong> en el interior. Vélez-Blanco visita a las 18:00 por algo, y Jaén sale mucho mejor a primera hora.</span></li>
+      <li><span class="marker">02</span><span><strong>Dos cambios de horario caen dentro de vuestra ventana:</strong> el Dolmen de Soto cambia el 16 de septiembre; Zuheros y Los Letreros, el 1 de octubre.</span></li>
+      <li><span class="marker">03</span><span><strong>Reservad por orden de dificultad:</strong> Ardales primero (semanas), luego Pileta y Victoria (días), y Zuheros y Soto casi de un día para otro.</span></li>
+      <li><span class="marker">04</span><span><strong>Llegad antes de la hora en todas.</strong> Pileta y Zuheros anulan la reserva si aparecéis justo.</span></li>
+      <li><span class="marker">05</span><span><strong>Ropa:</strong> de 10 a 15 °C dentro de las cuevas contra 28–32 fuera. Una capa fina en el coche y calzado con agarre, siempre.</span></li>
+      <li><span class="marker">06</span><span><strong>Fotos:</strong> prohibidas en Pileta (también los móviles) y en Zuheros. Permitidas sin flash en Los Letreros. Asumidlo antes de entrar.</span></li>
+      <li><span class="marker">07</span><span><strong>Comed antes.</strong> Ardales, Aldeaquemada y Bacinete os dejan a media mañana lejos de cualquier sitio: agua y algo de comer en el coche.</span></li>
+      <li><span class="marker">08</span><span><strong>Un solo sitio por día.</strong> Salvo Bacinete + Laja Alta, encadenar dos cuevas en una jornada convierte el plan en una carrera. Estas visitas se disfrutan sin prisa.</span></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Reservar y llegar</h2>
+    <p class="sec-note">En orden de urgencia real. <strong>El mapa apunta al punto de encuentro, no
+      siempre a la cueva</strong> — en Ardales, Aldeaquemada y los Letreros os citan en un centro del
+      pueblo y desde ahí se sube. Ir directo a la boca de la cueva es perder la plaza. Las rutas
+      salen ya calculadas desde Granada.</p>
+    <div class="book">
+
+      <div class="entry urgent">
+        <div class="entry-top">
+          <span class="who">Cueva de Ardales</span>
+          <span class="when">Llama hoy · 15 plazas/día</span>
+        </div>
+        <div class="acts">
+          <a class="btn primary" href="https://www.giglon.com/todos?idEvent=visitas-guiadas-a-la-cueva-de-ardales-malaga">Comprar entrada <span>· Giglon</span></a>
+          <a class="btn" href="https://www.google.com/maps/dir/?api=1&amp;origin=Granada%2C+Espa%C3%B1a&amp;destination=Centro+de+la+Prehistoria+de+Ardales">Ruta desde Granada <span>· Centro de la Prehistoria</span></a>
+          <a class="btn" href="tel:+34952458046">952 45 80 46</a>
+        </div>
+        <p class="meet"><span class="flag">Ojo:</span> os citan en el <strong>Centro de la
+          Prehistoria</strong> (Av. de Málaga 1). Desde allí seguís al guía en vuestro coche
+          <strong>4 km</strong> hasta la boca de la cueva.</p>
+      </div>
+
+      <div class="entry">
+        <div class="entry-top">
+          <span class="who">Cueva de la Pileta</span>
+          <span class="when">Esta semana</span>
+        </div>
+        <div class="acts">
+          <a class="btn primary" href="https://cuevadelapileta.com/visita">Reservar <span>· web oficial</span></a>
+          <a class="btn" href="https://www.google.com/maps/dir/?api=1&amp;origin=Granada%2C+Espa%C3%B1a&amp;destination=Cueva+de+la+Pileta%2C+Benaoj%C3%A1n">Ruta desde Granada <span>· la cueva</span></a>
+          <a class="btn" href="tel:+34677610500">677 610 500</a>
+        </div>
+        <p class="meet">Aquí la cita <strong>sí</strong> es en la cueva, con parking al pie. Hay que
+          estar en la puerta 15 minutos antes, no en el aparcamiento.</p>
+      </div>
+
+      <div class="entry">
+        <div class="entry-top">
+          <span class="who">Cueva de la Victoria</span>
+          <span class="when">Esta semana</span>
+        </div>
+        <div class="acts">
+          <a class="btn primary" href="https://www.giglon.com/todos?idEvent=visita-la-cueva-prehistorica-de-la-victoria">Comprar entrada <span>· Giglon</span></a>
+          <a class="btn" href="https://www.google.com/maps/dir/?api=1&amp;origin=Granada%2C+Espa%C3%B1a&amp;destination=Cueva+del+Tesoro%2C+Rinc%C3%B3n+de+la+Victoria">Ruta desde Granada <span>· oficinas Cueva del Tesoro</span></a>
+        </div>
+        <p class="meet">Se gestiona desde las <strong>oficinas de la Cueva del Tesoro</strong>. La
+          entrada llega al móvil: se enseña desde la app de Giglon. Sin devoluciones — incluye
+          seguro de accidentes.</p>
+      </div>
+
+      <div class="entry">
+        <div class="entry-top">
+          <span class="who">Bacinete · Los Barrios</span>
+          <span class="when">Esta semana</span>
+        </div>
+        <div class="acts">
+          <a class="btn primary" href="tel:+34956628013">Llamar <span>· 956 62 80 13</span></a>
+          <a class="btn" href="https://www.google.com/maps/dir/?api=1&amp;origin=Granada%2C+Espa%C3%B1a&amp;destination=Cuevas+de+Bacinete%2C+Los+Barrios%2C+C%C3%A1diz">Ruta desde Granada <span>· los abrigos</span></a>
+        </div>
+        <p class="meet">No hay reserva online. La oficina de turismo os asigna una ruta guiada
+          concertada. Acceso por la CA-221 Los Barrios–Facinas hasta el Puente de Hierro.</p>
+      </div>
+
+      <div class="entry">
+        <div class="entry-top">
+          <span class="who">Laja Alta · Jimena de la Frontera</span>
+          <span class="when">Esta semana</span>
+        </div>
+        <div class="acts">
+          <a class="btn primary" href="tel:+34956640254">Llamar <span>· 956 64 02 54</span></a>
+          <a class="btn" href="https://www.jimenadelafrontera.es/abrigo-rupestre-de-la-laja-alta">Info oficial <span>· ayuntamiento</span></a>
+          <a class="btn" href="https://www.google.com/maps/dir/?api=1&amp;origin=Granada%2C+Espa%C3%B1a&amp;destination=Jimena+de+la+Frontera%2C+C%C3%A1diz">Ruta desde Granada <span>· al pueblo</span></a>
+        </div>
+        <p class="meet"><span class="flag">Ojo:</span> el punto de encuentro <strong>lo fija la
+          empresa que os suba</strong> (recogen incluso en el alojamiento). No vayáis por vuestra
+          cuenta al camino de la finca: se sube en 4×4 y luego a pie.</p>
+      </div>
+
+      <div class="entry">
+        <div class="entry-top">
+          <span class="who">Aldeaquemada · Jaén</span>
+          <span class="when">48 h antes como mínimo</span>
+        </div>
+        <div class="acts">
+          <a class="btn primary" href="tel:+34680104199">Llamar <span>· 680 10 41 99</span></a>
+          <a class="btn" href="https://www.google.com/maps/dir/?api=1&amp;origin=Granada%2C+Espa%C3%B1a&amp;destination=Centro+de+Interpretaci%C3%B3n+Pablo+de+Olavide%2C+Aldeaquemada">Ruta desde Granada <span>· Centro Pablo de Olavide</span></a>
+          <a class="btn" href="tel:+34636006190">Guía «el Fide» <span>· 636 00 61 90</span></a>
+        </div>
+        <p class="meet"><span class="flag">Ojo:</span> se sale del <strong>Centro de Interpretación
+          Pablo de Olavide</strong>, siguiendo al guía en vuestro coche por pista forestal. Sin guía
+          no encontráis las pinturas: no hay señalización.</p>
+      </div>
+
+      <div class="entry">
+        <div class="entry-top">
+          <span class="who">Cueva de los Murciélagos · Zuheros</span>
+          <span class="when">Días antes</span>
+        </div>
+        <div class="acts">
+          <a class="btn primary" href="https://zuheros.es/reservas-de-la-cueva-de-los-murcielagos/">Reservar <span>· ayuntamiento</span></a>
+          <a class="btn" href="https://www.google.com/maps/dir/?api=1&amp;origin=Granada%2C+Espa%C3%B1a&amp;destination=Cueva+de+los+Murci%C3%A9lagos%2C+Zuheros">Ruta desde Granada <span>· la cueva</span></a>
+          <a class="btn" href="tel:+34957694545">957 69 45 45</a>
+        </div>
+        <p class="meet">No hay venta online: se reserva por teléfono o en turismo@zuheros.es. La
+          taquilla está en el <strong>Ecomuseo</strong>, a 200 m de la boca, y <strong>cierra 15
+          minutos antes</strong> de cada pase.</p>
+      </div>
+
+      <div class="entry">
+        <div class="entry-top">
+          <span class="who">Dolmen de Soto · Trigueros</span>
+          <span class="when">Días antes</span>
+        </div>
+        <div class="acts">
+          <a class="btn primary" href="tel:+34627940357">WhatsApp <span>· 627 94 03 57</span></a>
+          <a class="btn" href="https://www.google.com/maps/dir/?api=1&amp;origin=Granada%2C+Espa%C3%B1a&amp;destination=Dolmen+de+Soto%2C+Trigueros%2C+Huelva">Ruta desde Granada <span>· el dolmen</span></a>
+          <a class="btn" href="https://www.trigueros.es/es/turismo/dolmen-de-soto/">Info oficial</a>
+        </div>
+        <p class="meet">Reserva por WhatsApp o en dolmendesoto@ayto-trigueros.es. Pedid la
+          <strong>guiada de 2 €</strong>, no la libre.</p>
+      </div>
+
+      <div class="entry">
+        <div class="entry-top">
+          <span class="who">Cueva de los Letreros · Vélez-Blanco</span>
+          <span class="when">Días antes</span>
+        </div>
+        <div class="acts">
+          <a class="btn primary" href="tel:+34694467136">Llamar <span>· 694 46 71 36</span></a>
+          <a class="btn" href="https://www.google.com/maps/dir/?api=1&amp;origin=Granada%2C+Espa%C3%B1a&amp;destination=Centro+de+Visitantes+Almac%C3%A9n+del+Trigo%2C+V%C3%A9lez-Blanco">Ruta desde Granada <span>· Almacén del Trigo</span></a>
+        </div>
+        <p class="meet"><span class="flag">Ojo:</span> la visita sale del <strong>Centro de
+          Visitantes «Almacén del Trigo»</strong>, en el pueblo. Hay un aparcamiento junto a la
+          cueva, 5 km al norte, pero confirmad al reservar dónde os citan exactamente.</p>
+      </div>
+
+      <div class="entry">
+        <div class="entry-top">
+          <span class="who">Cueva de la Graja · Jimena, Jaén</span>
+          <span class="when">Sin reserva · con llave</span>
+        </div>
+        <div class="acts">
+          <a class="btn primary" href="https://jimenaturismo.grupofortalezas.com/la-cueva-de-la-graja">Info oficial <span>· turismo Jimena</span></a>
+          <a class="btn" href="https://www.google.com/maps/dir/?api=1&amp;origin=Granada%2C+Espa%C3%B1a&amp;destination=Cueva+de+la+Graja%2C+Jimena%2C+Ja%C3%A9n">Ruta desde Granada <span>· el sendero</span></a>
+        </div>
+        <p class="meet">Se pide la llave en el Ayuntamiento o en la casa junto a la <strong>Ermita
+          de la Virgen de Cánava</strong>. El sendero arranca en el campo de fútbol municipal.</p>
+      </div>
+
+      <div class="entry">
+        <div class="entry-top">
+          <span class="who">Moclín · Granada</span>
+          <span class="when">Visitas puntuales</span>
+        </div>
+        <div class="acts">
+          <a class="btn" href="https://www.google.com/maps/dir/?api=1&amp;origin=Granada%2C+Espa%C3%B1a&amp;destination=Centro+de+Interpretaci%C3%B3n+Comarcal%2C+Mocl%C3%ADn">Ruta desde Granada <span>· Centro de Interpretación</span></a>
+        </div>
+        <p class="meet">Malalmuerzo abre por convocatoria, no en calendario fijo. El Centro de
+          Interpretación Comarcal es donde os dicen qué hay abierto ese mes.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <p>Investigación web cerrada el 18 de agosto de 2026. Precios y horarios verificados contra la
+      web oficial del gestor o del ayuntamiento salvo donde se indica; distancias por carretera
+      aproximadas desde Granada. La mitad de estos sitios los gestiona un ayuntamiento pequeño y
+      cambian horario sin avisar: <strong>ningún dato de aquí sustituye la llamada de
+      confirmación</strong>.</p>
+    <p>Lo que marquéis como visitado se guarda en este navegador. Para que lo tengáis los dos, usad
+      «Compartir progreso»: copia un enlace que ya lleva dentro las que habéis hecho.</p>
+    <p>Fuentes principales:
+      <a href="https://cuevadelapileta.com/visita">Cueva de la Pileta</a> ·
+      <a href="https://www.ardales.es/5518/cueva-prehistorica-de-ardales">Ayuntamiento de Ardales</a> ·
+      <a href="https://turismozuheros.es/cueva-de-los-murcielagos/">Turismo Zuheros</a> ·
+      <a href="https://www.turismoenrincon.es/en/caves/victory-cave">Turismo Rincón de la Victoria</a> ·
+      <a href="https://descubrelosvelez.es/como-visitar-la-cueva-de-los-letreros-en-velez-blanco/">Descubre Los Vélez</a> ·
+      <a href="https://www.trigueros.es/es/turismo/dolmen-de-soto/">Ayuntamiento de Trigueros</a> ·
+      <a href="http://www.turismocampodegibraltar.com/los_barrios/que-visitar/Ruta-Arte-Rupestre-en-Los-Barrios/">Turismo Campo de Gibraltar</a> ·
+      <a href="https://www.jimenadelafrontera.es/abrigo-rupestre-de-la-laja-alta">Ayuntamiento de Jimena</a> ·
+      <a href="https://www.aldeaquemada.com/historia/arterupestre/index.html">Aldeaquemada</a> ·
+      <a href="https://cuevadenerja.es/pinturas-rupestres-de-la-cueva-de-nerja/">Cueva de Nerja</a> ·
+      <a href="https://rutasrupestresespana.prehistour.eu/10-arte-rupestre-andaluz/">Ruta del Arte Rupestre Andaluz</a>.
+    </p>
+  </footer>
+
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  var KEY = 'rupestre-andalucia-visitadas';
+  var NOMBRES = {
+    moclin: 'Moclín', zuheros: 'Zuheros', graja: 'la Graja', victoria: 'la Victoria',
+    ardales: 'Ardales', letreros: 'los Letreros', pileta: 'la Pileta',
+    aldeaquemada: 'Aldeaquemada', lajaalta: 'Laja Alta', bacinete: 'Bacinete', soto: 'el Dolmen de Soto'
+  };
+  var ORDEN = ['moclin', 'zuheros', 'graja', 'victoria', 'ardales', 'letreros', 'pileta', 'aldeaquemada', 'lajaalta', 'bacinete', 'soto'];
+  var MESES = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+
+  var estado = {};
+
+  function leerAlmacen() {
+    try {
+      var raw = window.localStorage.getItem(KEY);
+      return raw ? JSON.parse(raw) : {};
+    } catch (e) { return {}; }
+  }
+  function comoHash() {
+    var trozos = ORDEN.filter(function (id) { return estado[id]; })
+      .map(function (id) { return id + ':' + encodeURIComponent(estado[id]); });
+    return trozos.length ? '#hechas=' + trozos.join(',') : '';
+  }
+
+  // Doble red: almacén del navegador y, si ese falla (sandbox sin storage),
+  // el propio enlace de la barra de direcciones guarda el progreso.
+  function guardar() {
+    try { window.localStorage.setItem(KEY, JSON.stringify(estado)); } catch (e) {}
+    try {
+      var h = comoHash();
+      window.history.replaceState(null, '', window.location.pathname + window.location.search + h);
+    } catch (e) {
+      try { window.location.hash = comoHash().replace('#', ''); } catch (e2) {}
+    }
+  }
+
+  function leerHash() {
+    var h = window.location.hash || '';
+    var m = h.match(/hechas=([^&]*)/);
+    if (!m) return null;
+    var out = {};
+    m[1].split(',').forEach(function (trozo) {
+      if (!trozo) return;
+      var partes = trozo.split(':');
+      if (ORDEN.indexOf(partes[0]) === -1) return;
+      out[partes[0]] = partes[1] ? decodeURIComponent(partes[1]) : '';
+    });
+    return out;
+  }
+
+  function hoyCorto() {
+    var d = new Date();
+    return d.getDate() + ' ' + MESES[d.getMonth()] + ' ' + d.getFullYear();
+  }
+
+  function toast(txt) {
+    var t = document.getElementById('toast');
+    t.textContent = txt;
+    t.setAttribute('data-on', '1');
+    window.clearTimeout(toast._id);
+    toast._id = window.setTimeout(function () { t.removeAttribute('data-on'); }, 2800);
+  }
+
+  function siguientePendiente() {
+    for (var i = 0; i < ORDEN.length; i++) {
+      if (!estado[ORDEN[i]]) return NOMBRES[ORDEN[i]];
+    }
+    return null;
+  }
+
+  function pintar() {
+    var hechas = 0;
+    ORDEN.forEach(function (id) {
+      var visto = !!estado[id];
+      if (visto) hechas++;
+
+      var fila = document.querySelector('tr[data-id="' + id + '"]');
+      if (fila) fila.setAttribute('data-done', visto ? '1' : '0');
+
+      var pin = document.querySelector('.pin[data-id="' + id + '"]');
+      if (pin) pin.setAttribute('data-done', visto ? '1' : '0');
+
+      var ficha = document.querySelector('article.card[data-id="' + id + '"]');
+      if (ficha) ficha.setAttribute('data-done', visto ? '1' : '0');
+
+      var tick = document.querySelector('.tick[data-id="' + id + '"]');
+      if (tick) {
+        tick.setAttribute('aria-pressed', visto ? 'true' : 'false');
+        tick.textContent = visto ? '✓' : '';
+        tick.setAttribute('title', visto ? 'Marcada como visitada' : 'Marcar como visitada');
+      }
+
+      var sello = document.querySelector('.visitstamp[data-id="' + id + '"]');
+      if (sello) sello.textContent = visto && estado[id] ? 'Visitada el ' + estado[id] : (visto ? 'Visitada' : '');
+    });
+
+    document.getElementById('done-n').textContent = hechas;
+    document.getElementById('bar').style.width = (hechas / ORDEN.length * 100) + '%';
+
+    var k = document.getElementById('done-k');
+    var pend = siguientePendiente();
+    if (hechas === 0) k.textContent = 'Ninguna todavía · empieza por Zuheros';
+    else if (!pend) k.textContent = '¡Las once! Solo os queda esperar a que reabra el Tajo de las Figuras';
+    else k.textContent = 'Siguiente más cercana pendiente: ' + pend;
+  }
+
+  function alternar(id) {
+    if (estado[id]) { delete estado[id]; toast('Desmarcada ' + NOMBRES[id]); }
+    else { estado[id] = hoyCorto(); toast('¡' + NOMBRES[id] + ' visitada! ' + estado[id]); }
+    guardar();
+    pintar();
+  }
+
+  // Casillas en la tabla y en cada ficha
+  ORDEN.forEach(function (id) {
+    var celda = document.querySelector('tr[data-id="' + id + '"] td.check');
+    if (celda) {
+      var b = document.createElement('button');
+      b.className = 'tick';
+      b.type = 'button';
+      b.setAttribute('data-id', id);
+      b.setAttribute('aria-pressed', 'false');
+      b.setAttribute('aria-label', 'Marcar ' + NOMBRES[id] + ' como visitada');
+      celda.appendChild(b);
+    }
+    var pie = document.querySelector('article.card[data-id="' + id + '"] .cardfoot');
+    if (pie) {
+      var b2 = document.createElement('button');
+      b2.className = 'btn';
+      b2.type = 'button';
+      b2.setAttribute('data-mark', id);
+      b2.textContent = 'Marcar como visitada';
+      pie.appendChild(b2);
+      var s = document.createElement('span');
+      s.className = 'visitstamp';
+      s.setAttribute('data-id', id);
+      pie.appendChild(s);
+    }
+  });
+
+  document.addEventListener('click', function (ev) {
+    var tick = ev.target.closest ? ev.target.closest('.tick') : null;
+    if (tick) { alternar(tick.getAttribute('data-id')); return; }
+
+    var marca = ev.target.closest ? ev.target.closest('[data-mark]') : null;
+    if (marca) {
+      var id = marca.getAttribute('data-mark');
+      alternar(id);
+      marca.textContent = estado[id] ? 'Quitar la marca' : 'Marcar como visitada';
+      return;
+    }
+
+    var pin = ev.target.closest ? ev.target.closest('.pin') : null;
+    if (pin) {
+      var destino = document.getElementById('c-' + pin.getAttribute('data-id'));
+      if (destino) {
+        destino.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        destino.classList.remove('flash');
+        void destino.offsetWidth;
+        destino.classList.add('flash');
+      }
+    }
+  });
+
+  document.addEventListener('keydown', function (ev) {
+    if (ev.key !== 'Enter' && ev.key !== ' ') return;
+    var pin = ev.target.closest ? ev.target.closest('.pin') : null;
+    if (!pin) return;
+    ev.preventDefault();
+    pin.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+  });
+
+  document.getElementById('toggle-filter').addEventListener('click', function () {
+    var on = document.body.getAttribute('data-filter') === 'pending';
+    document.body.setAttribute('data-filter', on ? '' : 'pending');
+    this.textContent = on ? 'Ver solo pendientes' : 'Ver todas';
+  });
+
+  document.getElementById('share').addEventListener('click', function () {
+    var url = window.location.href.split('#')[0] + comoHash();
+    if (navigator.share) {
+      navigator.share({ title: 'Andalucía Rupestre', text: 'Nuestro progreso por las cuevas', url: url })
+        .catch(function () {});
+      return;
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(function () {
+        toast('Enlace copiado — pásaselo por WhatsApp');
+      }).catch(function () { window.prompt('Copia este enlace:', url); });
+      return;
+    }
+    window.prompt('Copia este enlace:', url);
+  });
+
+  // Arranque: lo guardado aquí, más lo que venga en el enlace compartido
+  estado = leerAlmacen();
+  var delEnlace = leerHash();
+  if (delEnlace) {
+    Object.keys(delEnlace).forEach(function (id) {
+      if (!estado[id]) estado[id] = delEnlace[id] || hoyCorto();
+    });
+    guardar();
+  }
+  pintar();
+})();
+</script>
+
+</body>
+</html>
