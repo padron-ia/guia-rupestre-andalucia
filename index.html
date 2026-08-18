@@ -804,6 +804,15 @@
     article.card .plegable { display: none; }
     article.card[data-abierta="1"] .plegable { display: block; }
 
+    /* plegada, la ficha enseña solo lo que se usa de pie:
+       ver más, ruta, guardar y marcar. Lo demás, al abrirla. */
+    article.card:not([data-abierta="1"]) .cardfoot a.btn ~ a.btn,
+    article.card:not([data-abierta="1"]) [data-nota-btn],
+    article.card:not([data-abierta="1"]) [data-plan-btn] { display: none; }
+
+    /* la tabla de arriba y las fichas decían lo mismo: en móvil, una sola */
+    section[data-dup="tabla"] { display: none; }
+
     .datosclave {
       display: flex;
       flex-wrap: wrap;
@@ -1807,7 +1816,7 @@
       confirmación</strong>.</p>
     <p>Lo que marquéis como visitado se guarda en este navegador. Para que lo tengáis los dos, usad
       «Compartir progreso»: copia un enlace que ya lleva dentro las que habéis hecho.</p>
-    <p>Versión de la guía: <strong id="sello-version">18 de agosto de 2026, 11:49</strong>. En la web
+    <p>Versión de la guía: <strong id="sello-version">18 de agosto de 2026, 11:51</strong>. En la web
       publicada, cuando suba cambios os avisa abajo con un botón para actualizar — así la copia
       guardada en el móvil no se queda atrás.</p>
     <p>Fuentes principales:
@@ -2538,6 +2547,12 @@
 
   // Con treinta pantallas de guía, en el móvil hace falta poder saltar.
   (function () {
+    // En móvil la tabla comparativa sobra: las fichas ya llevan precio,
+    // duración, horario y la casilla de visitada.
+    var seccionTabla = document.getElementById('tbody');
+    while (seccionTabla && seccionTabla.tagName !== 'SECTION') seccionTabla = seccionTabla.parentNode;
+    if (seccionTabla) seccionTabla.setAttribute('data-dup', 'tabla');
+
     var mapa = [
       ['El mapa', 'Mapa'],
       ['Las once, de más cerca a más lejos', 'Lista'],
@@ -2558,6 +2573,7 @@
         if (h && h.textContent.trim().indexOf(par[0]) === 0) destino = s;
       });
       if (!destino) return;
+      if (destino.getAttribute('data-dup') === 'tabla') return; // oculta en móvil
       if (!destino.id) destino.id = 's' + i;
       var a = document.createElement('a');
       a.href = '#' + destino.id;
