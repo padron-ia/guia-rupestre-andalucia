@@ -151,12 +151,20 @@
     display: block;
     margin-top: 6px;
   }
-  .bar { flex: 1 1 200px; height: 6px; background: var(--surface-2); border: 1px solid var(--line); position: relative; }
+  .bar {
+    flex: 1 1 200px;
+    height: 10px;
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    overflow: hidden;
+    position: relative;
+  }
   .bar i {
     display: block;
     height: 100%;
     width: 100%;
-    background: var(--open);
+    background: linear-gradient(90deg, var(--ocre), var(--open));
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 260ms var(--ease-out);
@@ -338,7 +346,7 @@
     border: 1px solid var(--line);
     background: var(--surface-2);
     padding: 7px 12px;
-    border-radius: 2px;
+    border-radius: 999px;
     white-space: nowrap;
     font-variant-numeric: tabular-nums;
     cursor: pointer;
@@ -527,18 +535,24 @@
   .toolbar input[type="search"]:focus-visible { outline: 2px solid var(--rust); outline-offset: 1px; }
   .chips { display: flex; flex-wrap: wrap; gap: 6px; }
   .chipf {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: .04em;
-    padding: 6px 11px;
+    font-family: var(--body);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0;
+    padding: 8px 14px;
     border: 1px solid var(--line);
     background: var(--surface);
     color: var(--muted);
-    border-radius: 2px;
+    border-radius: 999px;
     cursor: pointer;
   }
   .chipf:hover { border-color: var(--rust); color: var(--rust); }
-  .chipf[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+  .chipf[aria-pressed="true"] {
+    background: var(--rust);
+    border-color: var(--rust);
+    color: #F6EFE4;
+    box-shadow: 0 1px 2px color-mix(in srgb, var(--rust) 35%, transparent);
+  }
   .chipf:focus-visible { outline: 2px solid var(--rust); outline-offset: 2px; }
 
   .ajustes summary {
@@ -772,24 +786,27 @@
 
   .marca-portada {
     position: absolute;
-    right: 4px;
-    top: -6px;
-    width: 132px;
-    height: 165px;
-    color: var(--rust);
-    opacity: .13;
+    right: 6px;
+    top: 18px;
+    width: 118px;
+    height: 148px;
+    fill: var(--rust);
+    opacity: .2;
     pointer-events: none;
+  }
+  @media (max-width: 640px) {
+    .marca-portada { width: 84px; height: 105px; top: 10px; right: 0; opacity: .16; }
   }
   .masthead { position: relative; overflow: hidden; }
 
   .sello-ficha {
-    width: 34px;
-    height: 34px;
-    color: var(--rust);
+    width: 32px;
+    height: 32px;
+    fill: var(--rust);
     flex: 0 0 auto;
-    opacity: .85;
+    opacity: .9;
   }
-  article.card[data-done="1"] .sello-ficha { color: var(--open); }
+  article.card[data-done="1"] .sello-ficha { fill: var(--open); }
 
   .glifo-seccion {
     width: 26px;
@@ -2064,7 +2081,7 @@
       confirmación</strong>.</p>
     <p>Lo que marquéis como visitado se guarda en este navegador. Para que lo tengáis los dos, usad
       «Compartir progreso»: copia un enlace que ya lleva dentro las que habéis hecho.</p>
-    <p>Versión de la guía: <strong id="sello-version">18 de agosto de 2026, 12:29</strong>. En la web
+    <p>Versión de la guía: <strong id="sello-version">18 de agosto de 2026, 12:30</strong>. En la web
       publicada, cuando suba cambios os avisa abajo con un botón para actualizar — así la copia
       guardada en el móvil no se queda atrás.</p>
     <p>Fuentes principales:
