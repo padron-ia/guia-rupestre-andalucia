@@ -676,6 +676,9 @@
   footer p { max-width: 74ch; }
   footer a { color: var(--muted); }
 
+  /* Piezas que solo existen para el móvil (se activan en su media query). */
+  .resumen, .datosclave, .avisoclave { display: none; }
+
   /* ---------- navegación rápida ---------- */
 
   .saltos {
@@ -827,6 +830,7 @@
     }
     .datosclave b { color: var(--ink); font-weight: 600; }
     .avisoclave {
+      display: block;
       margin: 12px 18px 0;
       padding: 10px 12px;
       background: var(--surface-2);
@@ -1818,7 +1822,7 @@
       confirmación</strong>.</p>
     <p>Lo que marquéis como visitado se guarda en este navegador. Para que lo tengáis los dos, usad
       «Compartir progreso»: copia un enlace que ya lleva dentro las que habéis hecho.</p>
-    <p>Versión de la guía: <strong id="sello-version">18 de agosto de 2026, 11:53</strong>. En la web
+    <p>Versión de la guía: <strong id="sello-version">18 de agosto de 2026, 11:54</strong>. En la web
       publicada, cuando suba cambios os avisa abajo con un botón para actualizar — así la copia
       guardada en el móvil no se queda atrás.</p>
     <p>Fuentes principales:
@@ -2124,11 +2128,6 @@
       if (!ficha) return;
       var cuerpo = ficha.querySelector('.card-body');
       var lede = cuerpo.querySelector('.lede');
-
-      var resumen = document.createElement('p');
-      resumen.className = 'resumen';
-      resumen.textContent = lede ? lede.textContent : '';
-      cuerpo.parentNode.insertBefore(resumen, cuerpo);
 
       // Lo que de verdad hace falta en la puerta: qué cuesta, cuánto dura
       // y a qué hora. Sale del propio contenido de la ficha.
