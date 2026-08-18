@@ -1,0 +1,25 @@
+{
+  "name": "Andalucía Rupestre",
+  "short_name": "Rupestre",
+  "description": "Las once cuevas y abrigos con arte prehistórico visitables en Andalucía, desde Granada.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#E6E9E3",
+  "theme_color": "#9E3A1C",
+  "lang": "es",
+  "icons": [
+    {
+      "src": "./icono.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "./icono-maskable.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}

@@ -4,7 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light dark">
-<meta name="description" content="Guia de las cuevas con arte rupestre visitables en Andalucia, desde Granada.">
+<meta name="description" content="Las once cuevas y abrigos con arte prehistorico visitables en Andalucia, desde Granada: mapa, precios, reservas y control de las ya visitadas.">
+<meta name="theme-color" content="#9E3A1C">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icono.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icono.svg">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Rupestre">
 </head>
 <body>
 <title>Andalucía Rupestre</title>
@@ -482,6 +488,124 @@
   .meet strong { color: var(--ink); }
   .meet .flag { color: var(--rust); font-weight: 600; }
 
+  /* ---------- barra de herramientas ---------- */
+
+  .toolbar {
+    border: 1px solid var(--line);
+    border-top: 0;
+    background: var(--surface-2);
+    padding: 16px 22px 18px;
+    margin: -56px 0 56px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .toolbar input[type="search"] {
+    width: 100%;
+    font-family: var(--body);
+    font-size: 15px;
+    padding: 10px 12px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--ink);
+    border-radius: 2px;
+  }
+  .toolbar input[type="search"]:focus-visible { outline: 2px solid var(--rust); outline-offset: 1px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chipf {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .04em;
+    padding: 6px 11px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--muted);
+    border-radius: 2px;
+    cursor: pointer;
+  }
+  .chipf:hover { border-color: var(--rust); color: var(--rust); }
+  .chipf[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+  .chipf:focus-visible { outline: 2px solid var(--rust); outline-offset: 2px; }
+
+  .ajustes summary {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--faint);
+    cursor: pointer;
+    padding: 4px 0;
+  }
+  .ajustes summary:focus-visible { outline: 2px solid var(--rust); outline-offset: 2px; }
+  .ajustes .fila { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; margin-top: 10px; }
+  .ajustes .et {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+  .conteo { font-family: var(--mono); font-size: 11px; color: var(--faint); letter-spacing: .04em; }
+
+  /* ---------- favoritos y notas ---------- */
+
+  .star {
+    appearance: none;
+    border: 1px solid var(--line);
+    background: var(--surface-2);
+    width: 22px; height: 22px;
+    border-radius: 2px;
+    cursor: pointer;
+    display: inline-grid;
+    place-items: center;
+    padding: 0;
+    color: var(--faint);
+    font-size: 12px;
+    line-height: 1;
+  }
+  .star:hover { border-color: var(--ocre); color: var(--ocre); }
+  .star[aria-pressed="true"] { background: var(--ocre); border-color: var(--ocre); color: #F6F8F3; }
+  .star:focus-visible { outline: 2px solid var(--rust); outline-offset: 2px; }
+
+  article.card[data-fav="1"] { border-color: var(--ocre); }
+  article.card[data-done="1"] { border-color: var(--open); }
+
+  .notabox { width: 100%; margin-top: 12px; }
+  .notabox textarea {
+    width: 100%;
+    min-height: 74px;
+    font-family: var(--body);
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 10px 12px;
+    border: 1px solid var(--line);
+    background: var(--surface-2);
+    color: var(--ink);
+    border-radius: 2px;
+    resize: vertical;
+  }
+  .notabox textarea:focus-visible { outline: 2px solid var(--rust); outline-offset: 1px; }
+  .notabox .pista { font-family: var(--mono); font-size: 10.5px; color: var(--faint); letter-spacing: .04em; display: block; margin-bottom: 6px; }
+  .tienenota { color: var(--ocre); }
+
+  .planbox { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; width: 100%; margin-top: 12px; }
+  .planbox input[type="date"] {
+    font-family: var(--mono);
+    font-size: 13px;
+    padding: 7px 10px;
+    border: 1px solid var(--line);
+    background: var(--surface-2);
+    color: var(--ink);
+    border-radius: 2px;
+  }
+  .planbox input[type="date"]:focus-visible { outline: 2px solid var(--rust); outline-offset: 1px; }
+
+  html[data-texto="grande"] body { font-size: 18px; }
+  html[data-texto="grande"] .specs dd,
+  html[data-texto="grande"] table { font-size: 16px; }
+
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
   /* ---------- varios ---------- */
 
   a { color: var(--rust); text-decoration-thickness: 1px; text-underline-offset: 2px; }
@@ -542,9 +666,47 @@
     </div>
     <div class="bar"><i id="bar"></i></div>
     <div class="tools">
-      <button class="btn" type="button" id="toggle-filter">Ver solo pendientes</button>
       <button class="btn primary" type="button" id="share">Compartir progreso</button>
     </div>
+  </div>
+
+  <div class="toolbar">
+    <label class="sr-only" for="q">Buscar</label>
+    <input type="search" id="q" placeholder="Buscar: Zuheros, gratis, escalones, Jaén…" autocomplete="off">
+    <div class="chips" id="filtros">
+      <button class="chipf" type="button" data-f="todas" aria-pressed="true">Todas</button>
+      <button class="chipf" type="button" data-f="pendientes" aria-pressed="false">Pendientes</button>
+      <button class="chipf" type="button" data-f="visitadas" aria-pressed="false">Visitadas</button>
+      <button class="chipf" type="button" data-f="quiero" aria-pressed="false">★ Quiero ir</button>
+      <button class="chipf" type="button" data-f="notas" aria-pressed="false">Con nota</button>
+      <button class="chipf" type="button" data-f="dia" aria-pressed="false">Cabe en un día</button>
+      <button class="chipf" type="button" data-f="fuera" aria-pressed="false">Dormir fuera</button>
+      <button class="chipf" type="button" data-f="reserva" aria-pressed="false">Reserva online</button>
+      <button class="chipf" type="button" data-f="gestion" aria-pressed="false">Hay que llamar</button>
+    </div>
+    <p class="conteo" id="conteo">Mostrando las 11</p>
+    <details class="ajustes">
+      <summary>⚙️ Ajustes</summary>
+      <div class="fila">
+        <span class="et">Tema</span>
+        <button class="chipf" type="button" data-tema="auto" aria-pressed="true">Auto</button>
+        <button class="chipf" type="button" data-tema="light" aria-pressed="false">☀️ Día</button>
+        <button class="chipf" type="button" data-tema="dark" aria-pressed="false">🌙 Noche</button>
+      </div>
+      <div class="fila">
+        <span class="et">Letra</span>
+        <button class="chipf" type="button" data-texto="normal" aria-pressed="true">Normal</button>
+        <button class="chipf" type="button" data-texto="grande" aria-pressed="false">Grande</button>
+      </div>
+      <div class="fila">
+        <span class="et">Sin cobertura</span>
+        <span class="conteo" id="offline-estado">Preparando la copia para usarla sin datos…</span>
+      </div>
+      <div class="fila" id="fila-instalar" hidden>
+        <span class="et">App</span>
+        <button class="btn primary" type="button" id="instalar">Instalar en el móvil</button>
+      </div>
+    </details>
   </div>
 
   <div class="alert">
@@ -1477,36 +1639,54 @@
 
 <script>
 (function () {
-  var KEY = 'rupestre-andalucia-visitadas';
-  var NOMBRES = {
-    moclin: 'Moclín', zuheros: 'Zuheros', graja: 'la Graja', victoria: 'la Victoria',
-    ardales: 'Ardales', letreros: 'los Letreros', pileta: 'la Pileta',
-    aldeaquemada: 'Aldeaquemada', lajaalta: 'Laja Alta', bacinete: 'Bacinete', soto: 'el Dolmen de Soto'
-  };
-  var ORDEN = ['moclin', 'zuheros', 'graja', 'victoria', 'ardales', 'letreros', 'pileta', 'aldeaquemada', 'lajaalta', 'bacinete', 'soto'];
+  var KEY = 'rupestre-andalucia';
   var MESES = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
 
-  var estado = {};
+  var SITIOS = {
+    moclin:       { n: 'Moclín',                    corto: 'Moclín',      plan: 'dia',   via: 'gestion', min: 50,  destino: 'Centro de Interpretación Comarcal, Moclín', tel: '' },
+    zuheros:      { n: 'Cueva de los Murciélagos',  corto: 'Zuheros',     plan: 'dia',   via: 'gestion', min: 80,  destino: 'Cueva de los Murciélagos, Zuheros', tel: '957694545' },
+    graja:        { n: 'Cueva de la Graja',         corto: 'la Graja',    plan: 'dia',   via: 'gestion', min: 85,  destino: 'Cueva de la Graja, Jimena, Jaén', tel: '' },
+    victoria:     { n: 'Cueva de la Victoria',      corto: 'la Victoria', plan: 'dia',   via: 'reserva', min: 80,  destino: 'Cueva del Tesoro, Rincón de la Victoria', tel: '' },
+    ardales:      { n: 'Cueva de Ardales',          corto: 'Ardales',     plan: 'dia',   via: 'reserva', min: 105, destino: 'Centro de la Prehistoria de Ardales', tel: '952458046' },
+    letreros:     { n: 'Cueva de los Letreros',     corto: 'los Letreros',plan: 'fuera', via: 'gestion', min: 120, destino: 'Centro de Visitantes Almacén del Trigo, Vélez-Blanco', tel: '694467136' },
+    pileta:       { n: 'Cueva de la Pileta',        corto: 'la Pileta',   plan: 'dia',   via: 'reserva', min: 150, destino: 'Cueva de la Pileta, Benaoján', tel: '677610500' },
+    aldeaquemada: { n: 'Aldeaquemada',              corto: 'Aldeaquemada',plan: 'fuera', via: 'gestion', min: 140, destino: 'Centro de Interpretación Pablo de Olavide, Aldeaquemada', tel: '680104199' },
+    lajaalta:     { n: 'Laja Alta',                 corto: 'Laja Alta',   plan: 'fuera', via: 'gestion', min: 180, destino: 'Jimena de la Frontera, Cádiz', tel: '956640254' },
+    bacinete:     { n: 'Bacinete',                  corto: 'Bacinete',    plan: 'fuera', via: 'gestion', min: 180, destino: 'Cuevas de Bacinete, Los Barrios, Cádiz', tel: '956628013' },
+    soto:         { n: 'Dolmen de Soto',            corto: 'el Dolmen de Soto', plan: 'fuera', via: 'gestion', min: 200, destino: 'Dolmen de Soto, Trigueros, Huelva', tel: '627940357' }
+  };
+  var ORDEN = ['moclin', 'zuheros', 'graja', 'victoria', 'ardales', 'letreros', 'pileta', 'aldeaquemada', 'lajaalta', 'bacinete', 'soto'];
+
+  var datos = { hechas: {}, favs: {}, notas: {} };
+  var filtro = 'todas';
+  var busqueda = '';
+
+  /* ---------- guardado: navegador + la propia URL como red de seguridad ---------- */
 
   function leerAlmacen() {
     try {
       var raw = window.localStorage.getItem(KEY);
-      return raw ? JSON.parse(raw) : {};
-    } catch (e) { return {}; }
-  }
-  function comoHash() {
-    var trozos = ORDEN.filter(function (id) { return estado[id]; })
-      .map(function (id) { return id + ':' + encodeURIComponent(estado[id]); });
-    return trozos.length ? '#hechas=' + trozos.join(',') : '';
+      if (raw) return JSON.parse(raw);
+      var viejo = window.localStorage.getItem('rupestre-andalucia-visitadas');
+      if (viejo) return { hechas: JSON.parse(viejo), favs: {}, notas: {} };
+    } catch (e) {}
+    return null;
   }
 
-  // Doble red: almacén del navegador y, si ese falla (sandbox sin storage),
-  // el propio enlace de la barra de direcciones guarda el progreso.
+  function comoHash() {
+    var partes = [];
+    var h = ORDEN.filter(function (id) { return datos.hechas[id]; })
+      .map(function (id) { return id + ':' + encodeURIComponent(datos.hechas[id]); });
+    if (h.length) partes.push('hechas=' + h.join(','));
+    var f = ORDEN.filter(function (id) { return datos.favs[id]; });
+    if (f.length) partes.push('quiero=' + f.join(','));
+    return partes.length ? '#' + partes.join('&') : '';
+  }
+
   function guardar() {
-    try { window.localStorage.setItem(KEY, JSON.stringify(estado)); } catch (e) {}
+    try { window.localStorage.setItem(KEY, JSON.stringify(datos)); } catch (e) {}
     try {
-      var h = comoHash();
-      window.history.replaceState(null, '', window.location.pathname + window.location.search + h);
+      window.history.replaceState(null, '', window.location.pathname + window.location.search + comoHash());
     } catch (e) {
       try { window.location.hash = comoHash().replace('#', ''); } catch (e2) {}
     }
@@ -1514,14 +1694,17 @@
 
   function leerHash() {
     var h = window.location.hash || '';
-    var m = h.match(/hechas=([^&]*)/);
-    if (!m) return null;
-    var out = {};
-    m[1].split(',').forEach(function (trozo) {
-      if (!trozo) return;
-      var partes = trozo.split(':');
-      if (ORDEN.indexOf(partes[0]) === -1) return;
-      out[partes[0]] = partes[1] ? decodeURIComponent(partes[1]) : '';
+    var out = { hechas: {}, favs: {} };
+    var mh = h.match(/hechas=([^&]*)/);
+    if (mh) mh[1].split(',').forEach(function (t) {
+      if (!t) return;
+      var p = t.split(':');
+      if (ORDEN.indexOf(p[0]) === -1) return;
+      out.hechas[p[0]] = p[1] ? decodeURIComponent(p[1]) : '';
+    });
+    var mq = h.match(/quiero=([^&]*)/);
+    if (mq) mq[1].split(',').forEach(function (id) {
+      if (ORDEN.indexOf(id) !== -1) out.favs[id] = 1;
     });
     return out;
   }
@@ -1539,37 +1722,52 @@
     toast._id = window.setTimeout(function () { t.removeAttribute('data-on'); }, 2800);
   }
 
+  /* ---------- pintar el estado en toda la página ---------- */
+
   function siguientePendiente() {
-    for (var i = 0; i < ORDEN.length; i++) {
-      if (!estado[ORDEN[i]]) return NOMBRES[ORDEN[i]];
-    }
+    for (var i = 0; i < ORDEN.length; i++) if (!datos.hechas[ORDEN[i]]) return SITIOS[ORDEN[i]].corto;
     return null;
   }
 
   function pintar() {
     var hechas = 0;
     ORDEN.forEach(function (id) {
-      var visto = !!estado[id];
+      var visto = !!datos.hechas[id];
+      var fav = !!datos.favs[id];
+      var nota = (datos.notas[id] || '').trim();
       if (visto) hechas++;
 
-      var fila = document.querySelector('tr[data-id="' + id + '"]');
-      if (fila) fila.setAttribute('data-done', visto ? '1' : '0');
-
-      var pin = document.querySelector('.pin[data-id="' + id + '"]');
-      if (pin) pin.setAttribute('data-done', visto ? '1' : '0');
-
-      var ficha = document.querySelector('article.card[data-id="' + id + '"]');
-      if (ficha) ficha.setAttribute('data-done', visto ? '1' : '0');
+      ['tr[data-id="' + id + '"]', '.pin[data-id="' + id + '"]', 'article.card[data-id="' + id + '"]']
+        .forEach(function (sel) {
+          var el = document.querySelector(sel);
+          if (!el) return;
+          el.setAttribute('data-done', visto ? '1' : '0');
+          el.setAttribute('data-fav', fav ? '1' : '0');
+        });
 
       var tick = document.querySelector('.tick[data-id="' + id + '"]');
       if (tick) {
         tick.setAttribute('aria-pressed', visto ? 'true' : 'false');
         tick.textContent = visto ? '✓' : '';
-        tick.setAttribute('title', visto ? 'Marcada como visitada' : 'Marcar como visitada');
+        tick.title = visto ? 'Visitada' : 'Marcar como visitada';
       }
+      var star = document.querySelector('.star[data-fav-id="' + id + '"]');
+      if (star) {
+        star.setAttribute('aria-pressed', fav ? 'true' : 'false');
+        star.textContent = fav ? '★' : '☆';
+        star.title = fav ? 'En vuestra lista de próximas' : 'Añadir a próximas';
+      }
+      var marca = document.querySelector('[data-mark="' + id + '"]');
+      if (marca) marca.textContent = visto ? 'Quitar la marca' : 'Marcar como visitada';
 
       var sello = document.querySelector('.visitstamp[data-id="' + id + '"]');
-      if (sello) sello.textContent = visto && estado[id] ? 'Visitada el ' + estado[id] : (visto ? 'Visitada' : '');
+      if (sello) sello.textContent = visto ? (datos.hechas[id] ? 'Visitada el ' + datos.hechas[id] : 'Visitada') : '';
+
+      var bn = document.querySelector('[data-nota-btn="' + id + '"]');
+      if (bn) {
+        bn.textContent = nota ? '📝 Nota guardada' : '📝 Añadir nota';
+        bn.classList.toggle('tienenota', !!nota);
+      }
     });
 
     document.getElementById('done-n').textContent = hechas;
@@ -1578,65 +1776,316 @@
     var k = document.getElementById('done-k');
     var pend = siguientePendiente();
     if (hechas === 0) k.textContent = 'Ninguna todavía · empieza por Zuheros';
-    else if (!pend) k.textContent = '¡Las once! Solo os queda esperar a que reabra el Tajo de las Figuras';
+    else if (!pend) k.textContent = '¡Las once! Solo queda esperar a que reabra el Tajo de las Figuras';
     else k.textContent = 'Siguiente más cercana pendiente: ' + pend;
+
+    aplicarFiltro();
   }
 
-  function alternar(id) {
-    if (estado[id]) { delete estado[id]; toast('Desmarcada ' + NOMBRES[id]); }
-    else { estado[id] = hoyCorto(); toast('¡' + NOMBRES[id] + ' visitada! ' + estado[id]); }
-    guardar();
-    pintar();
+  /* ---------- buscador y filtros ---------- */
+
+  function pasaFiltro(id) {
+    var s = SITIOS[id];
+    if (filtro === 'pendientes') return !datos.hechas[id];
+    if (filtro === 'visitadas') return !!datos.hechas[id];
+    if (filtro === 'quiero') return !!datos.favs[id];
+    if (filtro === 'notas') return !!(datos.notas[id] || '').trim();
+    if (filtro === 'dia') return s.plan === 'dia';
+    if (filtro === 'fuera') return s.plan === 'fuera';
+    if (filtro === 'reserva') return s.via === 'reserva';
+    if (filtro === 'gestion') return s.via === 'gestion';
+    return true;
   }
 
-  // Casillas en la tabla y en cada ficha
+  function normaliza(t) {
+    return (t || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  }
+
+  function pasaBusqueda(id, ficha) {
+    if (!busqueda) return true;
+    var texto = normaliza((ficha ? ficha.textContent : '') + ' ' + (datos.notas[id] || ''));
+    return texto.indexOf(busqueda) !== -1;
+  }
+
+  function aplicarFiltro() {
+    var visibles = 0;
+    ORDEN.forEach(function (id) {
+      var ficha = document.querySelector('article.card[data-id="' + id + '"]');
+      var fila = document.querySelector('tr[data-id="' + id + '"]');
+      var ok = pasaFiltro(id) && pasaBusqueda(id, ficha);
+      if (ok) visibles++;
+      if (ficha) ficha.hidden = !ok;
+      if (fila) fila.hidden = !ok;
+      var pin = document.querySelector('.pin[data-id="' + id + '"]');
+      if (pin) pin.style.opacity = ok ? '' : '.25';
+    });
+    var c = document.getElementById('conteo');
+    if (visibles === ORDEN.length) c.textContent = 'Mostrando las 11';
+    else if (visibles === 0) c.textContent = 'Ninguna coincide — prueba a limpiar la búsqueda';
+    else c.textContent = 'Mostrando ' + visibles + ' de 11';
+  }
+
+  /* ---------- calendario ---------- */
+
+  function dosDigitos(n) { return (n < 10 ? '0' : '') + n; }
+
+  function textoPlan(id, fecha) {
+    var s = SITIOS[id];
+    var horas = Math.floor(s.min / 60), mins = s.min % 60;
+    var viaje = (horas ? horas + ' h ' : '') + (mins ? mins + ' min' : '');
+    var l = ['Visita a ' + s.n + '.', 'Desde Granada: unos ' + viaje.trim() + ' de coche.'];
+    if (s.tel) l.push('Teléfono: ' + s.tel + '.');
+    l.push('Ruta: https://www.google.com/maps/dir/?api=1&origin=Granada,+España&destination=' + encodeURIComponent(s.destino));
+    l.push('Guía completa: ' + window.location.href.split('#')[0]);
+    if ((datos.notas[id] || '').trim()) l.push('Nuestra nota: ' + datos.notas[id].trim());
+    return l.join('\n');
+  }
+
+  function aGoogleCalendar(id, fecha) {
+    var s = SITIOS[id];
+    var d = fecha.replace(/-/g, '');
+    var f = new Date(fecha + 'T12:00:00');
+    f.setDate(f.getDate() + 1);
+    var d2 = f.getFullYear() + dosDigitos(f.getMonth() + 1) + dosDigitos(f.getDate());
+    return 'https://calendar.google.com/calendar/render?action=TEMPLATE'
+      + '&text=' + encodeURIComponent('Visita: ' + s.n)
+      + '&dates=' + d + '/' + d2
+      + '&details=' + encodeURIComponent(textoPlan(id, fecha))
+      + '&location=' + encodeURIComponent(s.destino);
+  }
+
+  function descargarIcs(id, fecha) {
+    var s = SITIOS[id];
+    var d = fecha.replace(/-/g, '');
+    var f = new Date(fecha + 'T12:00:00');
+    f.setDate(f.getDate() + 1);
+    var d2 = f.getFullYear() + dosDigitos(f.getMonth() + 1) + dosDigitos(f.getDate());
+    var ics = [
+      'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Andalucia Rupestre//ES',
+      'BEGIN:VEVENT',
+      'UID:' + id + '-' + d + '@andalucia-rupestre',
+      'DTSTART;VALUE=DATE:' + d,
+      'DTEND;VALUE=DATE:' + d2,
+      'SUMMARY:Visita: ' + s.n,
+      'LOCATION:' + s.destino.replace(/,/g, '\\,'),
+      'DESCRIPTION:' + textoPlan(id, fecha).replace(/\n/g, '\\n').replace(/,/g, '\\,'),
+      'BEGIN:VALARM', 'TRIGGER:-P2D', 'ACTION:DISPLAY',
+      'DESCRIPTION:Confirmar la reserva de ' + s.n,
+      'END:VALARM',
+      'END:VEVENT', 'END:VCALENDAR'
+    ].join('\r\n');
+    try {
+      var blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'visita-' + id + '-' + d + '.ics';
+      document.body.appendChild(a);
+      a.click();
+      window.setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+      toast('Archivo de calendario descargado');
+    } catch (e) {
+      toast('Aquí no se puede descargar: usa el botón de Google Calendar');
+    }
+  }
+
+  /* ---------- montar los controles de cada ficha ---------- */
+
   ORDEN.forEach(function (id) {
     var celda = document.querySelector('tr[data-id="' + id + '"] td.check');
     if (celda) {
       var b = document.createElement('button');
-      b.className = 'tick';
-      b.type = 'button';
+      b.className = 'tick'; b.type = 'button';
       b.setAttribute('data-id', id);
       b.setAttribute('aria-pressed', 'false');
-      b.setAttribute('aria-label', 'Marcar ' + NOMBRES[id] + ' como visitada');
+      b.setAttribute('aria-label', 'Marcar ' + SITIOS[id].n + ' como visitada');
       celda.appendChild(b);
     }
+
     var pie = document.querySelector('article.card[data-id="' + id + '"] .cardfoot');
-    if (pie) {
-      var b2 = document.createElement('button');
-      b2.className = 'btn';
-      b2.type = 'button';
-      b2.setAttribute('data-mark', id);
-      b2.textContent = 'Marcar como visitada';
-      pie.appendChild(b2);
-      var s = document.createElement('span');
-      s.className = 'visitstamp';
-      s.setAttribute('data-id', id);
-      pie.appendChild(s);
-    }
+    if (!pie) return;
+
+    var star = document.createElement('button');
+    star.className = 'star'; star.type = 'button';
+    star.setAttribute('data-fav-id', id);
+    star.setAttribute('aria-pressed', 'false');
+    star.setAttribute('aria-label', 'Añadir ' + SITIOS[id].n + ' a próximas');
+    star.textContent = '☆';
+    pie.appendChild(star);
+
+    var bnota = document.createElement('button');
+    bnota.className = 'btn'; bnota.type = 'button';
+    bnota.setAttribute('data-nota-btn', id);
+    bnota.textContent = '📝 Añadir nota';
+    pie.appendChild(bnota);
+
+    var bplan = document.createElement('button');
+    bplan.className = 'btn'; bplan.type = 'button';
+    bplan.setAttribute('data-plan-btn', id);
+    bplan.textContent = '📅 Poner fecha';
+    pie.appendChild(bplan);
+
+    var bmark = document.createElement('button');
+    bmark.className = 'btn'; bmark.type = 'button';
+    bmark.setAttribute('data-mark', id);
+    bmark.textContent = 'Marcar como visitada';
+    pie.appendChild(bmark);
+
+    var sello = document.createElement('span');
+    sello.className = 'visitstamp';
+    sello.setAttribute('data-id', id);
+    pie.appendChild(sello);
+
+    var caja = document.createElement('div');
+    caja.className = 'notabox';
+    caja.hidden = true;
+    caja.setAttribute('data-nota-box', id);
+    caja.innerHTML = '<span class="pista">Vuestra nota — se guarda sola (a quién llamasteis, qué os dijeron, qué día hay hueco)</span>';
+    var ta = document.createElement('textarea');
+    ta.setAttribute('data-nota', id);
+    ta.placeholder = 'Ej.: llamamos el 20 de agosto, quedan plazas el sábado 12 a las 10:00';
+    caja.appendChild(ta);
+    pie.appendChild(caja);
+
+    var plan = document.createElement('div');
+    plan.className = 'planbox';
+    plan.hidden = true;
+    plan.setAttribute('data-plan-box', id);
+    var inp = document.createElement('input');
+    inp.type = 'date';
+    inp.setAttribute('data-fecha', id);
+    plan.appendChild(inp);
+    var bg = document.createElement('button');
+    bg.className = 'btn primary'; bg.type = 'button';
+    bg.setAttribute('data-cal-google', id);
+    bg.textContent = 'Google Calendar';
+    plan.appendChild(bg);
+    var bi = document.createElement('button');
+    bi.className = 'btn'; bi.type = 'button';
+    bi.setAttribute('data-cal-ics', id);
+    bi.textContent = 'Descargar .ics';
+    plan.appendChild(bi);
+    pie.appendChild(plan);
   });
 
-  document.addEventListener('click', function (ev) {
-    var tick = ev.target.closest ? ev.target.closest('.tick') : null;
-    if (tick) { alternar(tick.getAttribute('data-id')); return; }
+  /* ---------- interacción ---------- */
 
-    var marca = ev.target.closest ? ev.target.closest('[data-mark]') : null;
-    if (marca) {
-      var id = marca.getAttribute('data-mark');
-      alternar(id);
-      marca.textContent = estado[id] ? 'Quitar la marca' : 'Marcar como visitada';
+  function alternarVisita(id) {
+    if (datos.hechas[id]) { delete datos.hechas[id]; toast('Desmarcada ' + SITIOS[id].corto); }
+    else { datos.hechas[id] = hoyCorto(); toast('¡' + SITIOS[id].corto + ' visitada! ' + datos.hechas[id]); }
+    guardar(); pintar();
+  }
+
+  document.addEventListener('click', function (ev) {
+    var t = ev.target.closest ? ev.target : null;
+    if (!t) return;
+
+    var tick = t.closest('.tick');
+    if (tick) { alternarVisita(tick.getAttribute('data-id')); return; }
+
+    var marca = t.closest('[data-mark]');
+    if (marca) { alternarVisita(marca.getAttribute('data-mark')); return; }
+
+    var star = t.closest('.star');
+    if (star) {
+      var fid = star.getAttribute('data-fav-id');
+      if (datos.favs[fid]) { delete datos.favs[fid]; toast(SITIOS[fid].corto + ' fuera de próximas'); }
+      else { datos.favs[fid] = 1; toast(SITIOS[fid].corto + ' añadida a próximas'); }
+      guardar(); pintar();
       return;
     }
 
-    var pin = ev.target.closest ? ev.target.closest('.pin') : null;
+    var bn = t.closest('[data-nota-btn]');
+    if (bn) {
+      var nid = bn.getAttribute('data-nota-btn');
+      var caja = document.querySelector('[data-nota-box="' + nid + '"]');
+      caja.hidden = !caja.hidden;
+      if (!caja.hidden) caja.querySelector('textarea').focus();
+      return;
+    }
+
+    var bp = t.closest('[data-plan-btn]');
+    if (bp) {
+      var pid = bp.getAttribute('data-plan-btn');
+      var pb = document.querySelector('[data-plan-box="' + pid + '"]');
+      pb.hidden = !pb.hidden;
+      return;
+    }
+
+    var bg = t.closest('[data-cal-google]');
+    if (bg) {
+      var gid = bg.getAttribute('data-cal-google');
+      var gf = document.querySelector('[data-fecha="' + gid + '"]').value;
+      if (!gf) { toast('Elige primero el día'); return; }
+      window.open(aGoogleCalendar(gid, gf), '_blank', 'noopener');
+      return;
+    }
+
+    var bi = t.closest('[data-cal-ics]');
+    if (bi) {
+      var iid = bi.getAttribute('data-cal-ics');
+      var ifch = document.querySelector('[data-fecha="' + iid + '"]').value;
+      if (!ifch) { toast('Elige primero el día'); return; }
+      descargarIcs(iid, ifch);
+      return;
+    }
+
+    var chip = t.closest('.chipf[data-f]');
+    if (chip) {
+      filtro = chip.getAttribute('data-f');
+      document.querySelectorAll('.chipf[data-f]').forEach(function (c) {
+        c.setAttribute('aria-pressed', c === chip ? 'true' : 'false');
+      });
+      aplicarFiltro();
+      return;
+    }
+
+    var tema = t.closest('[data-tema]');
+    if (tema) {
+      var v = tema.getAttribute('data-tema');
+      if (v === 'auto') document.documentElement.removeAttribute('data-theme');
+      else document.documentElement.setAttribute('data-theme', v);
+      try { window.localStorage.setItem(KEY + ':tema', v); } catch (e) {}
+      document.querySelectorAll('[data-tema]').forEach(function (c) {
+        c.setAttribute('aria-pressed', c === tema ? 'true' : 'false');
+      });
+      return;
+    }
+
+    var texto = t.closest('[data-texto]');
+    if (texto) {
+      var tv = texto.getAttribute('data-texto');
+      document.documentElement.setAttribute('data-texto', tv);
+      try { window.localStorage.setItem(KEY + ':texto', tv); } catch (e) {}
+      document.querySelectorAll('[data-texto]').forEach(function (c) {
+        c.setAttribute('aria-pressed', c === texto ? 'true' : 'false');
+      });
+      return;
+    }
+
+    var pin = t.closest('.pin');
     if (pin) {
       var destino = document.getElementById('c-' + pin.getAttribute('data-id'));
       if (destino) {
+        destino.hidden = false;
         destino.scrollIntoView({ behavior: 'smooth', block: 'start' });
         destino.classList.remove('flash');
         void destino.offsetWidth;
         destino.classList.add('flash');
       }
+    }
+  });
+
+  document.addEventListener('input', function (ev) {
+    if (ev.target.id === 'q') {
+      busqueda = normaliza(ev.target.value);
+      aplicarFiltro();
+      return;
+    }
+    var ta = ev.target.getAttribute && ev.target.getAttribute('data-nota');
+    if (ta) {
+      datos.notas[ta] = ev.target.value;
+      window.clearTimeout(document._notaId);
+      document._notaId = window.setTimeout(function () { guardar(); pintar(); }, 600);
     }
   });
 
@@ -1648,17 +2097,10 @@
     pin.dispatchEvent(new MouseEvent('click', { bubbles: true }));
   });
 
-  document.getElementById('toggle-filter').addEventListener('click', function () {
-    var on = document.body.getAttribute('data-filter') === 'pending';
-    document.body.setAttribute('data-filter', on ? '' : 'pending');
-    this.textContent = on ? 'Ver solo pendientes' : 'Ver todas';
-  });
-
   document.getElementById('share').addEventListener('click', function () {
     var url = window.location.href.split('#')[0] + comoHash();
     if (navigator.share) {
-      navigator.share({ title: 'Andalucía Rupestre', text: 'Nuestro progreso por las cuevas', url: url })
-        .catch(function () {});
+      navigator.share({ title: 'Andalucía Rupestre', text: 'Nuestro avance por las cuevas', url: url }).catch(function () {});
       return;
     }
     if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -1670,15 +2112,70 @@
     window.prompt('Copia este enlace:', url);
   });
 
-  // Arranque: lo guardado aquí, más lo que venga en el enlace compartido
-  estado = leerAlmacen();
-  var delEnlace = leerHash();
-  if (delEnlace) {
-    Object.keys(delEnlace).forEach(function (id) {
-      if (!estado[id]) estado[id] = delEnlace[id] || hoyCorto();
+  /* ---------- sin cobertura: guardar la guía en el móvil ---------- */
+
+  var estadoOffline = document.getElementById('offline-estado');
+  if ('serviceWorker' in navigator && location.protocol === 'https:') {
+    navigator.serviceWorker.register('sw.js').then(function () {
+      estadoOffline.textContent = 'Guardada en el móvil: funciona sin datos en la sierra';
+    }).catch(function () {
+      estadoOffline.textContent = 'No se pudo guardar para uso sin datos en este navegador';
     });
-    guardar();
+  } else {
+    estadoOffline.textContent = 'Disponible sin datos solo en la versión publicada en la web';
   }
+
+  var promesaInstalar = null;
+  window.addEventListener('beforeinstallprompt', function (e) {
+    e.preventDefault();
+    promesaInstalar = e;
+    document.getElementById('fila-instalar').hidden = false;
+  });
+  document.getElementById('instalar').addEventListener('click', function () {
+    if (!promesaInstalar) return;
+    promesaInstalar.prompt();
+    promesaInstalar = null;
+    document.getElementById('fila-instalar').hidden = true;
+  });
+
+  /* ---------- arranque ---------- */
+
+  var guardado = leerAlmacen();
+  if (guardado) {
+    datos.hechas = guardado.hechas || {};
+    datos.favs = guardado.favs || {};
+    datos.notas = guardado.notas || {};
+  }
+  var delEnlace = leerHash();
+  Object.keys(delEnlace.hechas).forEach(function (id) {
+    if (!datos.hechas[id]) datos.hechas[id] = delEnlace.hechas[id] || hoyCorto();
+  });
+  Object.keys(delEnlace.favs).forEach(function (id) { datos.favs[id] = 1; });
+
+  ORDEN.forEach(function (id) {
+    var ta = document.querySelector('[data-nota="' + id + '"]');
+    if (ta && datos.notas[id]) {
+      ta.value = datos.notas[id];
+      document.querySelector('[data-nota-box="' + id + '"]').hidden = false;
+    }
+  });
+
+  try {
+    var tGuardado = window.localStorage.getItem(KEY + ':tema');
+    if (tGuardado && tGuardado !== 'auto') document.documentElement.setAttribute('data-theme', tGuardado);
+    if (tGuardado) document.querySelectorAll('[data-tema]').forEach(function (c) {
+      c.setAttribute('aria-pressed', c.getAttribute('data-tema') === tGuardado ? 'true' : 'false');
+    });
+    var txGuardado = window.localStorage.getItem(KEY + ':texto');
+    if (txGuardado) {
+      document.documentElement.setAttribute('data-texto', txGuardado);
+      document.querySelectorAll('[data-texto]').forEach(function (c) {
+        c.setAttribute('aria-pressed', c.getAttribute('data-texto') === txGuardado ? 'true' : 'false');
+      });
+    }
+  } catch (e) {}
+
+  guardar();
   pintar();
 })();
 </script>
