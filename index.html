@@ -674,12 +674,109 @@
   footer p { max-width: 74ch; }
   footer a { color: var(--muted); }
 
+  /* ---------- botón de volver arriba ---------- */
+
+  .arriba {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--ink);
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    display: none;
+    z-index: 9;
+  }
+  .arriba[data-on="1"] { display: block; }
+  .arriba:focus-visible { outline: 2px solid var(--rust); outline-offset: 2px; }
+
+  /* ---------- móvil ---------- */
+
   @media (max-width: 640px) {
-    .wrap { padding: 0 18px 64px; }
+    .wrap { padding: 0 16px 80px; }
+    .masthead { padding: 34px 0 18px; }
+    section { margin-bottom: 52px; }
+
     .specs { grid-template-columns: 1fr; }
     .specs dt { border-bottom: 0; padding-bottom: 0; }
     .specs dd { padding-top: 2px; }
     .days li { flex-direction: column; gap: 2px; }
+
+    /* objetivos táctiles cómodos */
+    .btn { padding: 12px 14px; font-size: 12.5px; }
+    .chipf { padding: 11px 13px; font-size: 12px; }
+    .tick, .star { width: 42px; height: 42px; font-size: 16px; }
+    .toolbar input[type="search"] { font-size: 16px; padding: 13px 12px; }
+    .planbox input[type="date"] { font-size: 16px; padding: 11px 12px; flex: 1 1 100%; }
+    .cardfoot .btn, .cardfoot [data-mark] { flex: 1 1 calc(50% - 4px); text-align: center; }
+    .cardfoot [data-mark] { margin-left: 0; flex-basis: 100%; }
+    .progress .tools .btn { flex: 1 1 100%; text-align: center; }
+
+    /* el mapa, legible */
+    svg.map { min-height: 300px; }
+    .pin .lbl { font-size: 14px; }
+    .capital text { font-size: 12px; }
+    .prov { font-size: 11px; letter-spacing: 1px; }
+    .origin text { font-size: 15px; }
+
+    /* la tabla deja de ser tabla: una tarjeta por sitio */
+    .scroller { border: 0; background: transparent; overflow: visible; }
+    table { min-width: 0; font-size: 15px; }
+    thead { display: none; }
+    tbody tr {
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      align-items: start;
+      gap: 2px 12px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      margin-bottom: 10px;
+      padding: 12px 14px;
+    }
+    tbody tr[hidden] { display: none; }
+    tbody td { border: 0; padding: 1px 0; grid-column: 2; }
+    td.check { grid-column: 1; grid-row: 1 / span 6; padding: 0; }
+    td.site { font-size: 16px; white-space: normal; }
+    td.num, td:nth-child(5), td:nth-child(6) { font-size: 13px; color: var(--muted); }
+    tbody td[data-et]::before {
+      content: attr(data-et) ": ";
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--faint);
+    }
+
+    /* fichas plegadas: la cabecera y los botones siempre a mano */
+    article.card .plegable { display: none; }
+    article.card[data-abierta="1"] .plegable { display: block; }
+    .resumen {
+      padding: 16px 18px 0;
+      margin: 0;
+      font-size: 15px;
+      color: var(--muted);
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    article.card[data-abierta="1"] .resumen { display: none; }
+    .card-head, .card-body { padding-left: 18px; padding-right: 18px; }
+    .card-head h3 { font-size: 1.32rem; }
+    .cardfoot { margin: 0 18px; }
+    .fromhome { padding: 12px 18px; }
+    .verdict p { font-size: 14.5px; }
+
+    .toolbar { padding: 14px 16px 16px; margin: -52px 0 46px; }
+    .progress { padding: 16px 18px 18px; }
+    .alert { padding: 18px 18px 20px; }
+    .out > div, .route, .entry { padding-left: 18px; padding-right: 18px; }
   }
 </style>
 
@@ -1653,7 +1750,7 @@
       confirmación</strong>.</p>
     <p>Lo que marquéis como visitado se guarda en este navegador. Para que lo tengáis los dos, usad
       «Compartir progreso»: copia un enlace que ya lleva dentro las que habéis hecho.</p>
-    <p>Versión de la guía: <strong id="sello-version">18 de agosto de 2026, 11:41</strong>. En la web
+    <p>Versión de la guía: <strong id="sello-version">18 de agosto de 2026, 11:47</strong>. En la web
       publicada, cuando suba cambios os avisa abajo con un botón para actualizar — así la copia
       guardada en el móvil no se queda atrás.</p>
     <p>Fuentes principales:
@@ -1932,6 +2029,64 @@
     }
   }
 
+  /* ---------- adaptación al móvil ---------- */
+
+  var esMovil = window.matchMedia('(max-width: 640px)');
+
+  // Etiquetas en las celdas: en móvil la tabla se convierte en tarjetas y,
+  // sin cabecera visible, cada dato necesita decir qué es.
+  (function () {
+    var cabeceras = [].map.call(document.querySelectorAll('thead th'), function (th) {
+      return th.textContent.trim();
+    });
+    [].forEach.call(document.querySelectorAll('#tbody tr'), function (tr) {
+      [].forEach.call(tr.children, function (td, i) {
+        var et = cabeceras[i];
+        if (!et || i === 0 || i === 1 || et === '✓') return;
+        td.setAttribute('data-et', et);
+      });
+    });
+  })();
+
+  // Cada ficha se pliega en móvil: se ve el titular, la distancia, un
+  // resumen de tres líneas y los botones. El resto, a un toque.
+  (function () {
+    ORDEN.forEach(function (id) {
+      var ficha = document.querySelector('article.card[data-id="' + id + '"]');
+      if (!ficha) return;
+      var cuerpo = ficha.querySelector('.card-body');
+      var lede = cuerpo.querySelector('.lede');
+
+      var resumen = document.createElement('p');
+      resumen.className = 'resumen';
+      resumen.textContent = lede ? lede.textContent : '';
+      cuerpo.parentNode.insertBefore(resumen, cuerpo);
+
+      cuerpo.classList.add('plegable');
+
+      var toggle = document.createElement('button');
+      toggle.className = 'btn';
+      toggle.type = 'button';
+      toggle.setAttribute('data-abrir', id);
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.textContent = 'Ver la ficha completa';
+      var pie = ficha.querySelector('.cardfoot');
+      pie.insertBefore(toggle, pie.firstChild);
+    });
+  })();
+
+  function pintarPlegado() {
+    var movil = esMovil.matches;
+    ORDEN.forEach(function (id) {
+      var ficha = document.querySelector('article.card[data-id="' + id + '"]');
+      var boton = document.querySelector('[data-abrir="' + id + '"]');
+      if (!ficha || !boton) return;
+      boton.hidden = !movil;
+      if (!movil) ficha.removeAttribute('data-abierta');
+    });
+  }
+  esMovil.addEventListener ? esMovil.addEventListener('change', pintarPlegado) : esMovil.addListener(pintarPlegado);
+
   /* ---------- montar los controles de cada ficha ---------- */
 
   ORDEN.forEach(function (id) {
@@ -2110,11 +2265,34 @@
       return;
     }
 
+    var abrir = t.closest('[data-abrir]');
+    if (abrir) {
+      var aid = abrir.getAttribute('data-abrir');
+      var fa = document.querySelector('article.card[data-id="' + aid + '"]');
+      var abierta = fa.getAttribute('data-abierta') === '1';
+      if (abierta) {
+        fa.removeAttribute('data-abierta');
+        abrir.textContent = 'Ver la ficha completa';
+        abrir.setAttribute('aria-expanded', 'false');
+        fa.scrollIntoView({ block: 'nearest' });
+      } else {
+        fa.setAttribute('data-abierta', '1');
+        abrir.textContent = 'Ocultar la ficha';
+        abrir.setAttribute('aria-expanded', 'true');
+      }
+      return;
+    }
+
     var pin = t.closest('.pin');
     if (pin) {
       var destino = document.getElementById('c-' + pin.getAttribute('data-id'));
       if (destino) {
         destino.hidden = false;
+        if (esMovil.matches) {
+          destino.setAttribute('data-abierta', '1');
+          var ba = destino.querySelector('[data-abrir]');
+          if (ba) { ba.textContent = 'Ocultar la ficha'; ba.setAttribute('aria-expanded', 'true'); }
+        }
         destino.scrollIntoView({ behavior: 'smooth', block: 'start' });
         destino.classList.remove('flash');
         void destino.offsetWidth;
@@ -2271,6 +2449,21 @@
     }
   } catch (e) {}
 
+  // Volver arriba: con esta longitud, en el móvil hace falta.
+  var btnArriba = document.createElement('button');
+  btnArriba.className = 'arriba';
+  btnArriba.type = 'button';
+  btnArriba.setAttribute('aria-label', 'Volver arriba');
+  btnArriba.textContent = '↑';
+  document.body.appendChild(btnArriba);
+  btnArriba.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+  window.addEventListener('scroll', function () {
+    btnArriba.setAttribute('data-on', window.scrollY > 900 ? '1' : '0');
+  }, { passive: true });
+
+  pintarPlegado();
   guardar();
   pintar();
 })();
